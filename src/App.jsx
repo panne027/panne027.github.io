@@ -7,32 +7,81 @@ import {
 import { publications, pressCoverage, researchProjects, publicationCategories } from "./data/publications.js";
 import { experience, education, skills, projects } from "./data/experience.js";
 
-// Floating Navigation Component
+// Title Header Component
+function TitleHeader({ isVisible }) {
+    return (
+        <header className={`fixed top-4 left-4 z-50 bg-gradient-to-r from-neutral-950/95 to-neutral-900/95 backdrop-blur-md border border-neutral-700/50 rounded-lg shadow-lg transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
+            {/* <div className="px-4 py-3">
+                <h1 className="text-lg font-bold text-white">
+                    Harish Panneer Selvam
+                </h1>
+            </div> */}
+        </header>
+    );
+}
+
+// ... existing code ...
 function FloatingNavigation() {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
     const [activeSection, setActiveSection] = useState('home');
+    const [showTitle, setShowTitle] = useState(false);
+    const [indicatorStyle, setIndicatorStyle] = useState({});
 
     useEffect(() => {
+        let ticking = false;
+
         const handleScroll = () => {
-            const scrollY = window.scrollY;
-            setIsVisible(scrollY > 100);
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    setIsVisible(scrollY >= 0);
+                    setShowTitle(scrollY > 100);
 
-            // Determine active section based on scroll position
-            const sections = ['home', 'publications', 'experience', 'projects', 'contact'];
-            const sectionElements = sections.map(id => document.getElementById(id));
+                    // Determine active section based on scroll position
+                    const sections = ['home', 'publications', 'experience', 'projects', 'contact'];
+                    const sectionElements = sections.map(id => document.getElementById(id));
 
-            for (let i = sections.length - 1; i >= 0; i--) {
-                const element = sectionElements[i];
-                if (element && element.offsetTop <= scrollY + 200) {
-                    setActiveSection(sections[i]);
-                    break;
+                    for (let i = sections.length - 1; i >= 0; i--) {
+                        const element = sectionElements[i];
+                        if (element && element.offsetTop <= scrollY + 200) {
+                            setActiveSection(sections[i]);
+                            break;
+                        }
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Update indicator position when active section changes
+    useEffect(() => {
+        const updateIndicator = () => {
+            const activeElement = document.querySelector(`[data-nav-item="${activeSection}"]`);
+            if (activeElement) {
+                const rect = activeElement.getBoundingClientRect();
+                const parent = activeElement.parentElement;
+                if (parent) {
+                    const parentRect = parent.getBoundingClientRect();
+                    const x = rect.left - parentRect.left;
+                    const width = rect.width;
+                    setIndicatorStyle({
+                        transform: `translateX(${x}px)`,
+                        width: `${width}px`,
+                        opacity: 1
+                    });
                 }
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+        // Small delay to ensure DOM is updated
+        const timeoutId = setTimeout(updateIndicator, 10);
+        return () => clearTimeout(timeoutId);
+    }, [activeSection]);
 
     const navItems = [
         { id: 'home', label: "Home", icon: <Home className="w-4 h-4" /> },
@@ -45,28 +94,54 @@ function FloatingNavigation() {
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            const offset = 80; // Account for fixed navigation
+            const elementTop = element.offsetTop;
+            const offsetPosition = elementTop - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
     };
 
     if (!isVisible) return null;
 
     return (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
-            <div className="flex items-center gap-2 px-4 py-3 bg-neutral-950/90 backdrop-blur-md border border-neutral-700/50 rounded-full shadow-lg">
-                {navItems.map((item) => (
-                    <button
-                        key={item.id}
-                        onClick={() => scrollToSection(item.id)}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${activeSection === item.id
-                            ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30'
-                            : 'text-neutral-300 hover:text-white hover:bg-neutral-800/50'
-                            }`}
-                    >
-                        {item.icon}
-                        <span className="hidden md:inline text-sm">{item.label}</span>
-                    </button>
-                ))}
+        <div className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-r from-neutral-950/95 to-neutral-900/95 backdrop-blur-md border-b border-neutral-700/50 transition-all duration-300">
+            <div className="max-w-7xl mx-auto px-6 py-3">
+                <div className="flex items-center justify-between">
+                    {/* Title that appears when scrolling */}
+                    <div className={`transition-all duration-300 ${showTitle ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}>
+                        <h1 className="text-lg font-bold text-white">
+                            Harish Panneer Selvam
+                        </h1>
+                    </div>
+
+                    {/* Navigation items */}
+                    <div className="flex items-center gap-2 relative">
+                        {/* Sliding indicator */}
+                        <div
+                            className="absolute h-8 bg-blue-600/20 border border-blue-500/30 rounded-lg transition-all duration-500 ease-out shadow-lg"
+                            style={indicatorStyle}
+                        />
+
+                        {navItems.map((item) => (
+                            <button
+                                key={item.id}
+                                data-nav-item={item.id}
+                                onClick={() => scrollToSection(item.id)}
+                                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:scale-105 relative z-10 ${activeSection === item.id
+                                    ? 'text-blue-300'
+                                    : 'text-neutral-300 hover:text-white hover:bg-neutral-800/50'
+                                    }`}
+                            >
+                                {item.icon}
+                                <span className="hidden md:inline text-sm">{item.label}</span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -100,13 +175,13 @@ function ScrollToTop() {
 
 // Home Section Component
 function HomeSection() {
-    const [year, setYear] = useState(2025);
+    const [year, setYear] = useState(new Date().getFullYear());
     useEffect(() => setYear(new Date().getFullYear()), []);
 
     return (
         <section id="home" className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
             {/* HERO */}
-            <header className="max-w-7xl mx-auto px-6 py-24">
+            <header className="max-w-7xl mx-auto px-6 py-16">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     <div className="space-y-8">
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-full text-sm">
@@ -154,10 +229,21 @@ function HomeSection() {
                     </div>
 
                     <div className="relative">
-                        <div className="aspect-square lg:aspect-[4/5] rounded-3xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border border-neutral-700/50 p-8 backdrop-blur-sm">
-                            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-blue-600/10 via-purple-600/10 to-pink-600/10" />
+                        <div className="aspect-square lg:aspect-[4/5] rounded-3xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border border-neutral-700/50 p-8 backdrop-blur-sm overflow-hidden">
+                            {/* Photo */}
+                            <div className="absolute inset-0 rounded-3xl overflow-hidden">
+                                <img
+                                    src="/thumbnails/PXL_20240730_175801701.PORTRAIT~2.jpg"
+                                    alt="Harish Panneer Selvam"
+                                    className="w-full h-full object-cover"
+                                />
+                                {/* Gradient overlay for the bottom half of the photo */}
+                                <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-neutral-950/90 via-neutral-950/50 to-transparent"></div>
+                            </div>
+
                             <div className="relative h-full flex flex-col justify-end">
-                                <div className="space-y-4">
+                                <div className="relative space-y-4 z-10">
+                                    <h2 className="text-5xl font-bold text-white mb-2"> <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Harish Panneer Selvam</span></h2>
                                     <div className="flex items-center gap-2 text-blue-400">
                                         <Award className="w-5 h-5" />
                                         <span className="text-sm font-medium">Recent Highlights</span>
@@ -220,21 +306,36 @@ function PublicationsSection() {
     const categories = [
         { id: 'all', label: 'All Publications', count: publications.length + pressCoverage.length },
         { id: 'patents', label: 'Patents', count: publicationCategories.patents.length },
-        { id: 'journals', label: 'Journal Papers', count: publicationCategories.journals.length },
-        { id: 'conferences', label: 'Conference Papers', count: publicationCategories.conferences.length },
-        { id: 'preprints', label: 'Preprints', count: publicationCategories.preprints.length },
+        { id: 'papers', label: 'Papers', count: publicationCategories.papers.length },
+        // { id: 'conferences', label: 'Conference Papers', count: publicationCategories.conferences.length },
+        // { id: 'preprints', label: 'Preprints', count: publicationCategories.preprints.length },
         { id: 'thesis', label: 'Thesis', count: publicationCategories.thesis.length },
         { id: 'press', label: 'Press Coverage', count: publicationCategories.press.length }
     ];
 
-    const filteredPublications = [...publications, ...pressCoverage].filter(pub => {
-        const matchesCategory = selectedCategory === 'all' ||
-            (selectedCategory === 'press' ? pressCoverage.includes(pub) :
-                pub.type === selectedCategory);
-        const matchesSearch = pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const getPublicationsForCategory = (category) => {
+        switch (category) {
+            case 'all':
+                return [...publications, ...pressCoverage];
+            case 'patents':
+                return publicationCategories.patents;
+            case 'papers':
+                return publicationCategories.papers;
+            case 'thesis':
+                return publicationCategories.thesis;
+            case 'press':
+                return publicationCategories.press;
+            default:
+                return [...publications, ...pressCoverage];
+        }
+    };
+
+    const filteredPublications = getPublicationsForCategory(selectedCategory).filter(pub => {
+        const matchesSearch = searchTerm === '' ||
+            pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             pub.authors?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             pub.venue?.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesCategory && matchesSearch;
+        return matchesSearch;
     });
 
     return (
@@ -290,9 +391,7 @@ function PublicationCard({ publication }) {
     const getTypeIcon = (type) => {
         switch (type) {
             case 'patent': return <FileText className="w-5 h-5 text-green-400" />;
-            case 'journal': return <BookOpen className="w-5 h-5 text-blue-400" />;
-            case 'conference': return <Users className="w-5 h-5 text-purple-400" />;
-            case 'preprint': return <Globe className="w-5 h-5 text-orange-400" />;
+            case 'papers': return <BookOpen className="w-5 h-5 text-blue-400" />;
             case 'thesis': return <Award className="w-5 h-5 text-pink-400" />;
             default: return <ExternalLink className="w-5 h-5 text-neutral-400" />;
         }
@@ -307,8 +406,8 @@ function PublicationCard({ publication }) {
                 {/* Thumbnail */}
                 <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-700 border border-neutral-600 flex items-center justify-center flex-shrink-0 overflow-hidden">
                     {publication.thumbnail ? (
-                        <img 
-                            src={publication.thumbnail} 
+                        <img
+                            src={publication.thumbnail}
                             alt={`${publication.title} thumbnail`}
                             className="w-full h-full object-cover"
                             onError={(e) => {
@@ -364,9 +463,9 @@ function PublicationCard({ publication }) {
 
                     <div className="flex flex-wrap gap-3">
                         {publication.links?.map((link) => (
-                            <a 
-                                key={link.href} 
-                                href={link.href} 
+                            <a
+                                key={link.href}
+                                href={link.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 text-blue-300 hover:text-blue-200 hover:from-blue-600/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium"
@@ -658,20 +757,35 @@ function ContactSection() {
 
 // Main App Component
 export default function App() {
+    const [titleVisible, setTitleVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            setTitleVisible(scrollY < 100);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <TitleHeader isVisible={titleVisible} />
             <FloatingNavigation />
             <ScrollToTop />
 
-            <HomeSection />
-            <PublicationsSection />
-            <ExperienceSection />
-            <ProjectsSection />
-            <ContactSection />
+            <div className="pt-20">
+                <HomeSection />
+                <PublicationsSection />
+                <ExperienceSection />
+                <ProjectsSection />
+                <ContactSection />
+            </div>
 
             <footer className="py-12 text-center border-t border-neutral-800/50 bg-neutral-950/50">
                 <div className="max-w-7xl mx-auto px-6">
-                    <p className="text-sm text-neutral-500">© 2025 Harish Panneer Selvam · Built with React & Tailwind CSS · Deployed on GitHub Pages</p>
+                    <p className="text-sm text-neutral-500">© {new Date().getFullYear()} Harish Panneer Selvam · Built with React & Tailwind CSS · Deployed on GitHub Pages</p>
                 </div>
             </footer>
         </div>

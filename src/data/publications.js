@@ -19,7 +19,7 @@ export const publications = [
     },
     {
         id: "journal-ev-range-prediction",
-        type: "journal",
+        type: "papers",
         title: "Neural Network-Based Electric Vehicle Range Prediction for Smart Charging Optimization",
         authors: "Harish Panneer Selvam, et al.",
         venue: "Journal of Dynamic Systems, Measurement, and Control",
@@ -39,7 +39,7 @@ export const publications = [
     },
     {
         id: "sae-nox-emissions",
-        type: "conference",
+        type: "papers",
         title: "Prediction of NOx Emissions from Compression Ignition Engines Using Ensemble Learning-Based Models with Physical Interpretability",
         authors: "Harish Panneer Selvam, et al.",
         venue: "SAE Technical Paper Series",
@@ -57,7 +57,7 @@ export const publications = [
     },
     {
         id: "arxiv-physics-ai-2021",
-        type: "preprint",
+        type: "papers",
         title: "Vehicle Emissions Prediction with Physics‑Aware AI Models: Preliminary Results",
         authors: "Harish Panneer Selvam, et al.",
         venue: "arXiv",
@@ -75,7 +75,7 @@ export const publications = [
     },
     {
         id: "arxiv-physics-ai-2025",
-        type: "preprint",
+        type: "papers",
         title: "Physics‑Based ML Framework for Predicting NOx Emissions from Compression Ignition Engines Using OBD Data",
         authors: "Harish Panneer Selvam, et al.",
         venue: "arXiv",
@@ -111,18 +111,34 @@ export const publications = [
     },
     {
         id: "survey-differential-equations",
-        type: "survey",
+        type: "papers",
         title: "A Survey on Solving & Discovering Differential Equations Using Deep Neural Networks",
         authors: "Harish Panneer Selvam, et al.",
         venue: "Survey Paper",
         year: "2023",
         description: "Comprehensive survey of deep neural network approaches for solving and discovering differential equations in engineering applications.",
-        thumbnail: "/thumbnails/survey-differential-equations.jpg",
+        thumbnail: "/thumbnails/survey-differential-equations.svg",
         links: [
             { label: "arXiv", href: "https://arxiv.org/abs/2304.13807", icon: "external" },
             { label: "Google Scholar", href: "https://scholar.google.com/scholar?q=A+Survey+Solving+Discovering+Differential+Equations+Deep+Neural+Networks+Harish+Panneer+Selvam", icon: "external" }
         ],
         tags: ["Deep Neural Networks", "Differential Equations", "Survey", "AI"],
+        highlight: false
+    },
+    {
+        id: "tco-analysis-approach-and-regional-analysis-of-dwpt-for-class-8-tractors",
+        type: "papers",
+        title: "TCO Analysis Approach and Regional Analysis of dWPT for Class 8 Tractors",
+        authors: "Harish Panneer Selvam, et al.",
+        venue: "Technical Report",
+        year: "2024",
+        description: "Comprehensive TCO analysis approach and regional analysis of dynamic wireless power transfer (dWPT) for Class 8 tractors.",
+        thumbnail: "/thumbnails/tco-analysis-dwpt.svg",
+        links: [
+            { label: "DOI", href: "https://doi.org/10.2172/2406868", icon: "external" },
+            { label: "Google Scholar", href: "https://scholar.google.com/scholar?q=TCO+Analysis+Approach+and+Regional+Analysis+of+dWPT+for+Class+8+Tractors+Harish+Panneer+Selvam", icon: "external" }
+        ],
+        tags: ["TCO Analysis", "Regional Analysis", "dWPT", "Class 8 Tractors"],
         highlight: false
     }
 ];
@@ -134,7 +150,7 @@ export const pressCoverage = [
         source: "NREL News",
         date: "2024",
         description: "Feature article highlighting the release of T3CO as an open-source tool for commercial fleet electrification analysis.",
-        thumbnail: "/thumbnails/nrel-t3co-news.jpg",
+        thumbnail: "/thumbnails/nrel-t3co-news.svg",
         links: [
             { label: "NREL News", href: "https://www.nrel.gov/news/detail/program/2024/nrels-commercial-electric-vehicle-cost-of-ownership-tool-is-best-in-class-and-free", icon: "external" }
         ],
@@ -147,7 +163,7 @@ export const pressCoverage = [
         source: "Charged EVs",
         date: "2024",
         description: "Industry coverage of T3CO tool adoption in commercial fleet electrification planning.",
-        thumbnail: "/thumbnails/charged-evs-t3co.jpg",
+        thumbnail: "/thumbnails/charged-evs-t3co.svg",
         links: [
             { label: "Charged EVs", href: "https://chargedevs.com/newswire/nrels-free-analysis-tool-helps-fleets-calculate-tco-for-evs/", icon: "external" }
         ],
@@ -160,7 +176,7 @@ export const pressCoverage = [
         source: "T5E IIT Madras",
         date: "2024",
         description: "Profile of Harish Panneer Selvam, a graduate student at IIT Madras.",
-        thumbnail: "/thumbnails/t5eiitm-profile.jpg",
+        thumbnail: "/thumbnails/t5eiitm-profile.svg",
         links: [
             { label: "T5E IIT Madras", href: "https://www.t5eiitm.org/through-the-goggles-of-a-graduate-harish-panneer-selvam/", icon: "external" }
         ],
@@ -175,9 +191,9 @@ export const researchProjects = [
         id: "t3co-tool",
         title: "T3CO – Total Cost of Ownership Engine",
         type: "Open Source Tool",
-        year: "2023-2024",
+        year: "Research Software",
         description: "Comprehensive technoeconomic analysis tool for commercial EV/ICE fleet electrification planning with 10,000+ downloads.",
-        thumbnail: "/thumbnails/t3co-tool.jpg",
+        thumbnail: "/thumbnails/t3co-tool.svg",
         links: [
             { label: "PyPI Package", href: "https://pypi.org/project/t3co/", icon: "external" },
             { label: "GitHub", href: "https://github.com/NREL/T3CO", icon: "github" },
@@ -191,10 +207,10 @@ export const researchProjects = [
     {
         id: "t3co-go-dashboard",
         title: "T3CO-Go – Interactive Web Dashboard",
-        type: "Web Application",
+        type: "Research Software",
         year: "2024",
         description: "Interactive web dashboard for T3CO scenario analysis and visualization with comprehensive documentation.",
-        thumbnail: "/thumbnails/t3co-go-dashboard.jpg",
+        thumbnail: "/thumbnails/t3co-go-dashboard.svg",
         links: [
             { label: "DOI", href: "https://doi.org/10.11578/dc.20250422.3", icon: "external" },
             { label: "OSTI Record", href: "https://www.osti.gov/biblio/code-154613", icon: "external" },
@@ -209,7 +225,7 @@ export const researchProjects = [
         type: "Research Software",
         year: "2023-2024",
         description: "Enhanced data collection and processing pipeline for commercial vehicle operational data analysis.",
-        thumbnail: "/thumbnails/drivecat-plus.jpg",
+        thumbnail: "/thumbnails/drivecat-plus.svg",
         links: [
             { label: "PyPI Package", href: "https://pypi.org/project/drivecatplus/", icon: "external" },
         ],
@@ -220,7 +236,7 @@ export const researchProjects = [
 
 export const publicationCategories = {
     patents: publications.filter(p => p.type === "patent"),
-    journals: publications.filter(p => p.type === "journal"),
+    papers: publications.filter(p => p.type === "papers"),
     conferences: publications.filter(p => p.type === "conference"),
     preprints: publications.filter(p => p.type === "preprint"),
     thesis: publications.filter(p => p.type === "thesis"),

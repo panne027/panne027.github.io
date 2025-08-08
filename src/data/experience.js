@@ -1,18 +1,18 @@
 export const experience = [
     {
         org: "National Renewable Energy Laboratory (NREL)",
-        role: "Researcher II - Data Science",
+        role: "Researcher - Data Science",
         dept: "Center for Integrated Mobility Sciences",
         location: "Golden, CO",
         time: "2023 — Present",
-        thumbnail: "/thumbnails/nrel-logo.svg",
+        thumbnail: "/thumbnails/nrel.png",
         points: [
             "Led development of the T3CO technoeconomic tool and data-logging workflows, supporting 30+ DOE and industry projects",
             "Modernizing FleetREDI pipelines and dashboards with AI for enhancing FleetDNA, the largest public commercial vehicle dataset",
             "Engineered novel algorithms for operational and energy analyses to drive fleet decarbonization and scheduling improvements",
             "Maintain PyPI packages (T3CO, T3CO-Go, DriveCAT+) and develop internal tools, cumulatively exceeding 10,000 downloads"
         ],
-        technologies: ["Python", "PostgreSQL", "FastAPI", "PyTorch", "Docker", "GitHub Actions", "AWS"],
+        technologies: ["Python", "Machine Learning", "PostgreSQL", "PyTorch", "Docker", "GitHub Actions", "AWS"],
         highlight: true
     },
     {
@@ -21,7 +21,7 @@ export const experience = [
         dept: "",
         location: "Saint Paul, MI",
         time: "2021 — Present",
-        thumbnail: "/thumbnails/exergi-logo.svg",
+        thumbnail: "/thumbnails/exergi-logo.png",
         points: [
             "Helped secure a $2.5M SBIR grant & led energy management software development for next-gen robotic combat vehicles",
             "Developed a Python-based synthetic drive-cycle generator that expanded energy assessment scenarios indefinitely",
@@ -37,7 +37,7 @@ export const experience = [
         dept: "via HTC Global",
         location: "Dearborn, MI",
         time: "2021 — 2023",
-        thumbnail: "/thumbnails/ford-logo.svg",
+        thumbnail: "/thumbnails/Ford_logo_flat.svg.png",
         points: [
             "Modernized the Digital Manufacturing suite for 10,000+ users, reducing production planning cycle times by 30%",
             "Enhanced an AI-driven knowledge-graph-based NLP rules engine with Python modules, increasing extraction accuracy by 40%",
@@ -52,7 +52,7 @@ export const experience = [
         dept: "Mechanical Engineering",
         location: "Minneapolis, MN",
         time: "2019 — 2021",
-        thumbnail: "/thumbnails/umn-logo.svg",
+        thumbnail: "/thumbnails/umn.png",
         points: [
             "Developed interpretable DNN and LSTM models under NSF grant, improving vehicle emissions prediction accuracy by 60%",
             "Implemented ensemble learning (Random Forest, XGBoost) for battery energy forecasting, increasing reliability by 20%",
@@ -88,7 +88,7 @@ export const education = [
         minor: "Electrical & Computer Engineering",
         gpa: "",
         thesis: "Physics-Based Artificial Intelligence Models for Vehicle Emissions Prediction",
-        thumbnail: "/thumbnails/umn-logo.svg"
+        thumbnail: "/thumbnails/umn.png"
     },
     {
         school: "Indian Institute of Technology (IIT) Madras",
@@ -98,7 +98,7 @@ export const education = [
         minor: "",
         gpa: "",
         thesis: "",
-        thumbnail: "/thumbnails/iitm-logo.svg"
+        thumbnail: "/thumbnails/IIT_Madras_Logo.svg.png"
     }
 ];
 
