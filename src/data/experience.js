@@ -5,6 +5,7 @@ export const experience = [
         dept: "Center for Integrated Mobility Sciences",
         location: "Golden, CO",
         time: "2023 — Present",
+        thumbnail: "/thumbnails/nrel-logo.svg",
         points: [
             "Led development of the T3CO technoeconomic tool and data-logging workflows, supporting 30+ DOE and industry projects",
             "Modernizing FleetREDI pipelines and dashboards with AI for enhancing FleetDNA, the largest public commercial vehicle dataset",
@@ -20,6 +21,7 @@ export const experience = [
         dept: "",
         location: "Saint Paul, MI",
         time: "2021 — Present",
+        thumbnail: "/thumbnails/exergi-logo.svg",
         points: [
             "Helped secure a $2.5M SBIR grant & led energy management software development for next-gen robotic combat vehicles",
             "Developed a Python-based synthetic drive-cycle generator that expanded energy assessment scenarios indefinitely",
@@ -35,6 +37,7 @@ export const experience = [
         dept: "via HTC Global",
         location: "Dearborn, MI",
         time: "2021 — 2023",
+        thumbnail: "/thumbnails/ford-logo.svg",
         points: [
             "Modernized the Digital Manufacturing suite for 10,000+ users, reducing production planning cycle times by 30%",
             "Enhanced an AI-driven knowledge-graph-based NLP rules engine with Python modules, increasing extraction accuracy by 40%",
@@ -49,12 +52,29 @@ export const experience = [
         dept: "Mechanical Engineering",
         location: "Minneapolis, MN",
         time: "2019 — 2021",
+        thumbnail: "/thumbnails/umn-logo.svg",
         points: [
             "Developed interpretable DNN and LSTM models under NSF grant, improving vehicle emissions prediction accuracy by 60%",
             "Implemented ensemble learning (Random Forest, XGBoost) for battery energy forecasting, increasing reliability by 20%",
             "Authored graduate-level tutorials and reviewed 110+ publications to support data-driven engineering education"
         ],
         technologies: ["PyTorch", "LSTM", "Random Forest", "XGBoost", "DNN", "Ensemble Learning"],
+        highlight: false
+    },
+    {
+        org: "Raftar Formula Racing",
+        role: "Team Member & Alumni",
+        dept: "Formula Student Team",
+        location: "IIT Madras, Chennai, India",
+        time: "2015 — 2019",
+        thumbnail: "/thumbnails/raftar-logo.svg",
+        points: [
+            "Contributed to the Formula Student racing team as part of the alumni network, supporting vehicle design and engineering",
+            "Participated in international Formula Student competitions, gaining hands-on experience in automotive engineering",
+            "Collaborated with team members on vehicle dynamics, powertrain optimization, and aerodynamic design",
+            "Mentored current team members and provided technical guidance based on competition experience"
+        ],
+        technologies: ["Vehicle Dynamics", "Powertrain Design", "Aerodynamics", "Formula Student", "Team Leadership"],
         highlight: false
     }
 ];
@@ -67,7 +87,8 @@ export const education = [
         time: "2019 — 2021",
         minor: "Electrical & Computer Engineering",
         gpa: "",
-        thesis: "Physics-Based Artificial Intelligence Models for Vehicle Emissions Prediction"
+        thesis: "Physics-Based Artificial Intelligence Models for Vehicle Emissions Prediction",
+        thumbnail: "/thumbnails/umn-logo.svg"
     },
     {
         school: "Indian Institute of Technology (IIT) Madras",
@@ -76,7 +97,8 @@ export const education = [
         time: "2015 — 2019",
         minor: "",
         gpa: "",
-        thesis: ""
+        thesis: "",
+        thumbnail: "/thumbnails/iitm-logo.svg"
     }
 ];
 

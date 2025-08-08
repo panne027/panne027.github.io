@@ -9,7 +9,7 @@ export const publications = [
         patentNumber: "18/539,710",
         status: "Pending",
         description: "Novel machine learning approach for predicting energy consumption in complex systems with high accuracy and interpretability.",
-        thumbnail: "/thumbnails/patent-energy-prediction.jpg",
+        thumbnail: "/thumbnails/patent-energy-prediction.svg",
         links: [
             { label: "USPTO", href: "https://patents.google.com/patent/US20250123456A1", icon: "patent" },
             { label: "Google Patents", href: "https://patents.google.com/patent/US20250123456A1", icon: "external" }
@@ -28,7 +28,7 @@ export const publications = [
         pages: "011110",
         doi: "10.1115/1.4051234",
         description: "Advanced neural network models for electric vehicle range prediction enabling smart charging infrastructure optimization.",
-        thumbnail: "/thumbnails/journal-ev-range.jpg",
+        thumbnail: "/thumbnails/journal-ev-range.svg",
         links: [
             { label: "DOI", href: "https://doi.org/10.1115/1.4051234", icon: "external" },
             { label: "ASME Digital Collection", href: "https://asmedigitalcollection.asme.org/dynamicsystems/article/144/1/011110/1134567", icon: "external" },
@@ -46,7 +46,7 @@ export const publications = [
         year: "2021",
         paperNumber: "2021-01-0589",
         description: "Ensemble learning approach combining physics-based models with machine learning for NOx emissions prediction in diesel engines.",
-        thumbnail: "/thumbnails/sae-nox-paper.jpg",
+        thumbnail: "/thumbnails/sae-nox-paper.svg",
         links: [
             { label: "SAE Digital Library", href: "https://www.sae.org/publications/technical-papers/content/2021-01-0589/", icon: "external" },
             { label: "DOI", href: "https://doi.org/10.4271/2021-01-0589", icon: "external" },
@@ -64,7 +64,7 @@ export const publications = [
         year: "2021",
         arxivId: "2105.00375",
         description: "Pioneering work on physics-aware AI models for vehicle emissions prediction using OBD data and first-principles modeling.",
-        thumbnail: "/thumbnails/arxiv-physics-ai-2021.jpg",
+        thumbnail: "/thumbnails/arxiv-physics-ai-2021.svg",
         links: [
             { label: "arXiv", href: "https://arxiv.org/abs/2105.00375", icon: "external" },
             { label: "PDF", href: "https://arxiv.org/pdf/2105.00375", icon: "pdf" },
@@ -82,7 +82,7 @@ export const publications = [
         year: "2025",
         arxivId: "2503.05648",
         description: "Advanced physics-based machine learning framework for NOx emissions prediction with improved interpretability and generalization.",
-        thumbnail: "/thumbnails/arxiv-physics-ai-2025.jpg",
+        thumbnail: "/thumbnails/arxiv-physics-ai-2025.svg",
         links: [
             { label: "arXiv", href: "https://arxiv.org/abs/2503.05648", icon: "external" },
             { label: "PDF", href: "https://arxiv.org/pdf/2503.05648", icon: "pdf" },
@@ -100,7 +100,7 @@ export const publications = [
         year: "2021",
         department: "Mechanical Engineering",
         description: "Comprehensive thesis on developing physics-aware AI models for vehicle emissions prediction using on-board diagnostic data.",
-        thumbnail: "/thumbnails/thesis-physics-ai.jpg",
+        thumbnail: "/thumbnails/thesis-physics-ai.svg",
         links: [
             { label: "UMN Conservancy", href: "https://conservancy.umn.edu/server/api/core/bitstreams/15a28ede-bcd7-48a5-8909-42886ce00934/content", icon: "external" },
             { label: "PDF", href: "https://conservancy.umn.edu/bitstream/handle/11299/224123/PanneerSelvam_umn_0130M_22412.pdf", icon: "pdf" },
@@ -119,7 +119,7 @@ export const publications = [
         description: "Comprehensive survey of deep neural network approaches for solving and discovering differential equations in engineering applications.",
         thumbnail: "/thumbnails/survey-differential-equations.jpg",
         links: [
-            { label: "PDF", href: "#", icon: "pdf" },
+            { label: "arXiv", href: "https://arxiv.org/abs/2304.13807", icon: "external" },
             { label: "Google Scholar", href: "https://scholar.google.com/scholar?q=A+Survey+Solving+Discovering+Differential+Equations+Deep+Neural+Networks+Harish+Panneer+Selvam", icon: "external" }
         ],
         tags: ["Deep Neural Networks", "Differential Equations", "Survey", "AI"],
@@ -153,7 +153,21 @@ export const pressCoverage = [
         ],
         tags: ["Charged EVs", "T3CO", "Fleet Electrification", "Press Coverage"],
         highlight: false
-    }
+    },
+    {
+        id: "t5eiitm-profile",
+        title: "Through the Goggles of a Graduate: Harish Panneer Selvam",
+        source: "T5E IIT Madras",
+        date: "2024",
+        description: "Profile of Harish Panneer Selvam, a graduate student at IIT Madras.",
+        thumbnail: "/thumbnails/t5eiitm-profile.jpg",
+        links: [
+            { label: "T5E IIT Madras", href: "https://www.t5eiitm.org/through-the-goggles-of-a-graduate-harish-panneer-selvam/", icon: "external" }
+        ],
+        tags: ["T5E IIT Madras", "Harish Panneer Selvam", "Press Coverage"],
+        highlight: false
+    },
+
 ];
 
 export const researchProjects = [
@@ -167,7 +181,9 @@ export const researchProjects = [
         links: [
             { label: "PyPI Package", href: "https://pypi.org/project/t3co/", icon: "external" },
             { label: "GitHub", href: "https://github.com/NREL/T3CO", icon: "github" },
-            { label: "Documentation", href: "https://t3co.readthedocs.io/", icon: "external" }
+            { label: "OSTI Record", href: "https://www.osti.gov/biblio/code-123748", icon: "external" },
+            { label: "NREL Website", href: "https://www.nrel.gov/transportation/t3co/", icon: "external" },
+            { label: "Documentation", href: "https://nrel.github.io/T3CO/", icon: "external" }
         ],
         tags: ["Python", "Open Source", "Fleet Analytics", "TCO Analysis"],
         highlight: true
@@ -189,14 +205,13 @@ export const researchProjects = [
     },
     {
         id: "drivecat-plus",
-        title: "DriveCAT+ – Enhanced Data Collection",
-        type: "Data Pipeline",
+        title: "DriveCAT+ – Drivecycle Analysis Tool Plus",
+        type: "Research Software",
         year: "2023-2024",
         description: "Enhanced data collection and processing pipeline for commercial vehicle operational data analysis.",
         thumbnail: "/thumbnails/drivecat-plus.jpg",
         links: [
-            { label: "PyPI Package", href: "https://pypi.org/project/drivecat-plus/", icon: "external" },
-            { label: "Documentation", href: "https://drivecat-plus.readthedocs.io/", icon: "external" }
+            { label: "PyPI Package", href: "https://pypi.org/project/drivecatplus/", icon: "external" },
         ],
         tags: ["Data Engineering", "Python", "Vehicle Data", "ETL"],
         highlight: false

@@ -20,7 +20,7 @@ function FloatingNavigation() {
             // Determine active section based on scroll position
             const sections = ['home', 'publications', 'experience', 'projects', 'contact'];
             const sectionElements = sections.map(id => document.getElementById(id));
-            
+
             for (let i = sections.length - 1; i >= 0; i--) {
                 const element = sectionElements[i];
                 if (element && element.offsetTop <= scrollY + 200) {
@@ -58,11 +58,10 @@ function FloatingNavigation() {
                     <button
                         key={item.id}
                         onClick={() => scrollToSection(item.id)}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                            activeSection === item.id
-                                ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30'
-                                : 'text-neutral-300 hover:text-white hover:bg-neutral-800/50'
-                        }`}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${activeSection === item.id
+                            ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30'
+                            : 'text-neutral-300 hover:text-white hover:bg-neutral-800/50'
+                            }`}
                     >
                         {item.icon}
                         <span className="hidden md:inline text-sm">{item.label}</span>
@@ -114,12 +113,12 @@ function HomeSection() {
                             <Rocket className="w-4 h-4" />
                             Physics-guided ML for vehicles, energy & mission-critical systems
                         </div>
-                        
+
                         <div className="space-y-6">
                             <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
                                 Building reliable, <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">explainable</span> ML for vehicles, energy, and <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">mission‑critical</span> decisions.
                             </h1>
-                            
+
                             <p className="text-xl text-neutral-300 leading-relaxed max-w-2xl">
                                 I'm a mechanical engineering generalist who codes: I ship production‑grade data/ML systems and build decision tools that combine first‑principles physics with modern AI.
                             </p>
@@ -190,7 +189,7 @@ function HomeSection() {
                     <h2 className="text-3xl font-bold mb-4">Areas of Expertise</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Combining mechanical engineering fundamentals with modern software and ML practices</p>
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-6">
                     {skills.map((s) => (
                         <div key={s.group} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
@@ -231,7 +230,7 @@ function PublicationsSection() {
     const filteredPublications = [...publications, ...pressCoverage].filter(pub => {
         const matchesCategory = selectedCategory === 'all' ||
             (selectedCategory === 'press' ? pressCoverage.includes(pub) :
-                publications.filter(p => p.type === selectedCategory).includes(pub));
+                pub.type === selectedCategory);
         const matchesSearch = pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             pub.authors?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             pub.venue?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -262,7 +261,7 @@ function PublicationsSection() {
                             </button>
                         ))}
                     </div>
-                    
+
                     <div className="relative max-w-md mx-auto">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
                         <input
@@ -306,10 +305,23 @@ function PublicationCard({ publication }) {
             }`}>
             <div className="flex items-start gap-4">
                 {/* Thumbnail */}
-                <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-700 border border-neutral-600 flex items-center justify-center flex-shrink-0">
-                    {getTypeIcon(publication.type)}
+                <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-700 border border-neutral-600 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                    {publication.thumbnail ? (
+                        <img 
+                            src={publication.thumbnail} 
+                            alt={`${publication.title} thumbnail`}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.nextSibling.style.display = 'flex';
+                            }}
+                        />
+                    ) : null}
+                    <div className={`${publication.thumbnail ? 'hidden' : 'flex'} items-center justify-center w-full h-full`}>
+                        {getTypeIcon(publication.type)}
+                    </div>
                 </div>
-                
+
                 {/* Content */}
                 <div className="flex-1 space-y-3">
                     <div className="flex items-start justify-between gap-4">
@@ -329,7 +341,7 @@ function PublicationCard({ publication }) {
                                 </span>
                             </div>
                         </div>
-                        
+
                         {publication.highlight && (
                             <div className="flex items-center gap-2">
                                 <Zap className="w-4 h-4 text-yellow-400" />
@@ -337,11 +349,11 @@ function PublicationCard({ publication }) {
                             </div>
                         )}
                     </div>
-                    
+
                     {publication.description && (
                         <p className="text-neutral-300 text-sm leading-relaxed">{publication.description}</p>
                     )}
-                    
+
                     <div className="flex flex-wrap gap-2">
                         {publication.tags?.map((tag) => (
                             <span key={tag} className="text-xs px-2 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">
@@ -349,10 +361,16 @@ function PublicationCard({ publication }) {
                             </span>
                         ))}
                     </div>
-                    
-                    <div className="flex flex-wrap gap-4 text-sm">
+
+                    <div className="flex flex-wrap gap-3">
                         {publication.links?.map((link) => (
-                            <a key={link.href} href={link.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
+                            <a 
+                                key={link.href} 
+                                href={link.href} 
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 text-blue-300 hover:text-blue-200 hover:from-blue-600/30 hover:to-purple-600/30 transition-all duration-200 text-sm font-medium"
+                            >
                                 <ExternalLink className="w-4 h-4" />
                                 {link.label}
                             </a>
@@ -373,25 +391,43 @@ function ExperienceSection() {
                     <h2 className="text-4xl font-bold mb-4">Professional Experience</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Building impactful solutions at the intersection of engineering and AI</p>
                 </div>
-                
+
                 <div className="space-y-8">
                     {experience.map((e) => (
                         <div key={e.org} className={`p-6 rounded-2xl border backdrop-blur-sm ${e.highlight
                             ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10'
                             : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
                             }`}>
-                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
-                                <div>
-                                    <h3 className="text-xl font-semibold text-white">{e.role}</h3>
-                                    <p className="text-lg text-neutral-300">{e.org}</p>
-                                    {e.dept && <p className="text-sm text-neutral-400">{e.dept}</p>}
-                                    <p className="text-sm text-neutral-400">{e.location}</p>
+                            <div className="flex items-start gap-4 mb-6">
+                                <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-700 border border-neutral-600 flex items-center justify-center flex-shrink-0">
+                                    <img
+                                        src={e.thumbnail}
+                                        alt={`${e.org} logo`}
+                                        className="w-10 h-10 object-contain"
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            e.target.nextSibling.style.display = 'flex';
+                                        }}
+                                    />
+                                    <div className="hidden w-10 h-10 items-center justify-center text-neutral-400">
+                                        <Briefcase className="w-6 h-6" />
+                                    </div>
                                 </div>
-                                <div className="text-sm text-neutral-400 bg-neutral-800/50 px-3 py-1 rounded-full">
-                                    {e.time}
+                                <div className="flex-1">
+                                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                                        <div>
+                                            <h3 className="text-xl font-semibold text-white">{e.role}</h3>
+                                            <p className="text-lg text-neutral-300">{e.org}</p>
+                                            {e.dept && <p className="text-sm text-neutral-400">{e.dept}</p>}
+                                            <p className="text-sm text-neutral-400">{e.location}</p>
+                                        </div>
+                                        <div className="text-sm text-neutral-400 bg-neutral-800/50 px-3 py-1 rounded-full">
+                                            {e.time}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
+
                             <ul className="space-y-3 text-neutral-300 mb-6">
                                 {e.points.map((pt, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
@@ -400,7 +436,7 @@ function ExperienceSection() {
                                     </li>
                                 ))}
                             </ul>
-                            
+
                             <div className="flex flex-wrap gap-2">
                                 {e.technologies?.map((tech) => (
                                     <span key={tech} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">
@@ -418,19 +454,34 @@ function ExperienceSection() {
                         <h3 className="text-3xl font-bold mb-4">Education</h3>
                         <p className="text-neutral-400 max-w-2xl mx-auto">Academic foundation in engineering and technology</p>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-2 gap-6">
                         {education.map((ed) => (
                             <div key={ed.school} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
-                                <div className="flex items-center gap-3 mb-3">
-                                    <Users className="w-5 h-5 text-blue-400" />
-                                    <h4 className="text-lg font-semibold text-white">{ed.school}</h4>
+                                <div className="flex items-start gap-3 mb-3">
+                                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-700 border border-neutral-600 flex items-center justify-center flex-shrink-0">
+                                        <img
+                                            src={ed.thumbnail}
+                                            alt={`${ed.school} logo`}
+                                            className="w-8 h-8 object-contain"
+                                            onError={(e) => {
+                                                e.target.style.display = 'none';
+                                                e.target.nextSibling.style.display = 'flex';
+                                            }}
+                                        />
+                                        <div className="hidden w-8 h-8 items-center justify-center text-neutral-400">
+                                            <Users className="w-5 h-5" />
+                                        </div>
+                                    </div>
+                                    <div className="flex-1">
+                                        <h4 className="text-lg font-semibold text-white">{ed.school}</h4>
+                                        <p className="text-neutral-300 mb-2">{ed.degree}</p>
+                                        <p className="text-sm text-neutral-400 mb-2">{ed.location}</p>
+                                        <p className="text-sm text-neutral-400">{ed.time}</p>
+                                        {ed.minor && <p className="text-sm text-neutral-400 mt-2">Minor: {ed.minor}</p>}
+                                        {ed.thesis && <p className="text-sm text-neutral-400 mt-2">Thesis: {ed.thesis}</p>}
+                                    </div>
                                 </div>
-                                <p className="text-neutral-300 mb-2">{ed.degree}</p>
-                                <p className="text-sm text-neutral-400 mb-2">{ed.location}</p>
-                                <p className="text-sm text-neutral-400">{ed.time}</p>
-                                {ed.minor && <p className="text-sm text-neutral-400 mt-2">Minor: {ed.minor}</p>}
-                                {ed.thesis && <p className="text-sm text-neutral-400 mt-2">Thesis: {ed.thesis}</p>}
                             </div>
                         ))}
                     </div>
@@ -449,7 +500,7 @@ function ProjectsSection() {
                     <h2 className="text-4xl font-bold mb-4">Projects & Research</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Selected work combining physics, ML, and software engineering</p>
                 </div>
-                
+
                 <div className="grid lg:grid-cols-2 gap-8">
                     {projects.map((p) => (
                         <article key={p.title} className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${p.highlight
@@ -462,17 +513,17 @@ function ProjectsSection() {
                                     <span className="text-xs font-medium text-yellow-400">Featured Project</span>
                                 </div>
                             )}
-                            
+
                             <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
                             <p className="text-sm text-neutral-400 mb-3">{p.role}</p>
                             <p className="text-neutral-300 mb-4 leading-relaxed">{p.blurb}</p>
-                            
+
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {p.tags.map((t) => (
                                     <span key={t} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">{t}</span>
                                 ))}
                             </div>
-                            
+
                             <div className="flex flex-wrap gap-4 text-sm">
                                 {p.links.map((l) => (
                                     <a key={l.href} href={l.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
@@ -498,7 +549,7 @@ function ContactSection() {
                     <h2 className="text-4xl font-bold mb-4">Get in Touch</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Interested in physics-guided ML, vehicle systems, or energy optimization? Let's connect.</p>
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-6">
                         <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
@@ -535,7 +586,7 @@ function ContactSection() {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="space-y-6">
                         <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
                             <h3 className="text-xl font-semibold mb-4">Academic Profiles</h3>
@@ -563,7 +614,7 @@ function ContactSection() {
                                 </a>
                             </div>
                         </div>
-                        
+
                         <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
                             <h3 className="text-xl font-semibold mb-4">Areas of Collaboration</h3>
                             <div className="space-y-3">
@@ -585,6 +636,19 @@ function ContactSection() {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
+                            <h3 className="text-xl font-semibold mb-4">Affiliations</h3>
+                            <div className="space-y-4">
+                                <a href="https://www.raftariitm.com/alumni" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
+                                    <Car className="w-5 h-5 text-red-500" />
+                                    <div>
+                                        <p className="font-medium">Raftar Formula Racing</p>
+                                        <p className="text-sm text-neutral-400">Alumni Member - IIT Madras</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -598,13 +662,13 @@ export default function App() {
         <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
             <FloatingNavigation />
             <ScrollToTop />
-            
+
             <HomeSection />
             <PublicationsSection />
             <ExperienceSection />
             <ProjectsSection />
             <ContactSection />
-            
+
             <footer className="py-12 text-center border-t border-neutral-800/50 bg-neutral-950/50">
                 <div className="max-w-7xl mx-auto px-6">
                     <p className="text-sm text-neutral-500">© 2025 Harish Panneer Selvam · Built with React & Tailwind CSS · Deployed on GitHub Pages</p>
