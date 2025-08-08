@@ -1,8 +1,0 @@
-<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="80" height="80" rx="8" fill="#1F2937"/>
-  <circle cx="40" cy="30" r="10" fill="#F59E0B"/>
-  <path d="M30 30 L50 30 M40 20 L40 40" stroke="white" stroke-width="2" stroke-linecap="round"/>
-  <rect x="25" y="45" width="30" height="20" fill="#F59E0B" rx="2"/>
-  <text x="40" y="58" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="6" font-weight="bold">PHYSICS</text>
-  <text x="40" y="70" text-anchor="middle" fill="#F59E0B" font-family="Arial, sans-serif" font-size="6" font-weight="bold">ARXIV</text>
-</svg> 

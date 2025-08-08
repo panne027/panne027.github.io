@@ -1,6 +1,0 @@
-<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100" height="100" fill="#1f2937"/>
-  <text x="50" y="50" font-family="Arial, sans-serif" font-size="8" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">Survey</text>
-  <text x="50" y="65" font-family="Arial, sans-serif" font-size="6" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">Differential</text>
-  <text x="50" y="75" font-family="Arial, sans-serif" font-size="6" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">Equations</text>
-</svg> 

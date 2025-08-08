@@ -1,3 +1,0 @@
-This file is for search console verification purposes.
-Harish Panneer Selvam - Physics-Guided ML Engineer & Researcher at NREL
-Portfolio website: https://panne027.github.io/
