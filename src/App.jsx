@@ -1,178 +1,98 @@
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ArrowRight, Github, Linkedin, Mail, FileText, ExternalLink, Newspaper, Cpu, Car, Battery, BrainCircuit, Rocket, Award, Users, Globe, Zap } from "lucide-react";
+import { 
+    ArrowRight, Github, Linkedin, Mail, FileText, ExternalLink, Newspaper, 
+    Cpu, Car, Battery, BrainCircuit, Rocket, Award, Users, Globe, Zap,
+    Home, BookOpen, Briefcase, User, Search, Filter, Calendar, Tag
+} from "lucide-react";
+import { publications, pressCoverage, researchProjects, publicationCategories } from "./data/publications.js";
+import { experience, education, skills, projects } from "./data/experience.js";
 
-export default function Portfolio() {
-    const [year, setYear] = useState(2025);
-    useEffect(() => setYear(new Date().getFullYear()), []);
+// Navigation Component
+function Navigation() {
+    const location = useLocation();
+    const [isScrolled, setIsScrolled] = useState(false);
 
-    const skills = [
-        {
-            group: "Core Expertise",
-            items: [
-                "Physics‑guided ML", "Vehicle energy & emissions modeling", "Optimization",
-                "Data engineering (Py/SQL)", "MLOps & reproducibility", "Full‑stack dashboards"
-            ],
-            icon: <BrainCircuit className="w-5 h-5" />
-        },
-        {
-            group: "Software & Tools",
-            items: [
-                "Python (pandas, scikit‑learn, PyTorch)", "FastAPI", "Airflow", "Docker",
-                "PostgreSQL", "GitHub Actions", "Plotly/Matplotlib", "Jupyter"
-            ],
-            icon: <Cpu className="w-5 h-5" />
-        },
-        {
-            group: "Mechanical & Systems",
-            items: [
-                "Powertrains & calibration", "Hybrid/EV energy mgmt", "Thermals",
-                "On‑board diagnostics (OBD)", "V&V", "Experimental design"
-            ],
-            icon: <Car className="w-5 h-5" />
-        },
-        {
-            group: "Cloud & Applications",
-            items: [
-                "AWS basics", "Streamlit", "Dash", "Vite/React", "REST APIs"
-            ],
-            icon: <Globe className="w-5 h-5" />
-        }
-    ];
+    useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 10);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-    const projects = [
-        {
-            title: "T3CO – Total Cost of Ownership Engine",
-            role: "Lead developer & researcher",
-            blurb: "Built a transparent, modular TCO engine for commercial EV/ICE fleets. Refactored core architecture, improved usability, and opened to public domain.",
-            links: [
-                { label: "PyPI Package", href: "https://pypi.org/project/t3co/", icon: <ExternalLink className="w-4 h-4" /> },
-                { label: "NREL Feature", href: "https://www.nrel.gov/news/detail/program/2024/nrels-commercial-electric-vehicle-cost-of-ownership-tool-is-best-in-class-and-free", icon: <Newspaper className="w-4 h-4" /> },
-            ],
-            tags: ["Python", "Optimization", "Fleet Analytics", "Open Source"],
-            highlight: true
-        },
-        {
-            title: "T3CO‑Go – Interactive Web Dashboard",
-            role: "Author & maintainer",
-            blurb: "Interactive UI for scenario analysis and TCO visualization at scale. Packaged for local deployment with comprehensive documentation.",
-            links: [
-                { label: "DOI", href: "https://doi.org/10.11578/dc.20250422.3", icon: <ExternalLink className="w-4 h-4" /> },
-                { label: "OSTI Record", href: "https://www.osti.gov/biblio/code-154613", icon: <ExternalLink className="w-4 h-4" /> },
-            ],
-            tags: ["FastAPI", "Plotly", "Dashboards", "Packaging"],
-            highlight: true
-        },
-        {
-            title: "Physics‑aware AI for Vehicle Emissions",
-            role: "First author & ML engineer",
-            blurb: "Developed hybrid model using OBD signals + physics priors for NOx prediction. Improved interpretability and generalization across diverse operating conditions.",
-            links: [
-                { label: "arXiv (2021)", href: "https://arxiv.org/abs/2105.00375", icon: <ExternalLink className="w-4 h-4" /> },
-                { label: "arXiv (2025)", href: "https://arxiv.org/abs/2503.05648", icon: <ExternalLink className="w-4 h-4" /> }
-            ],
-            tags: ["Physics‑ML", "OBD", "Emissions", "PyTorch"],
-            highlight: true
-        },
-        {
-            title: "Mission‑aware Energy Prediction",
-            role: "Senior software/data engineer",
-            blurb: "Deployed explainable, physics‑guided energy estimators for military/commercial EVs across terrain, payload, and weather conditions.",
-            links: [
-                { label: "Company", href: "https://exergipredictive.com/", icon: <ExternalLink className="w-4 h-4" /> }
-            ],
-            tags: ["Energy Management", "Hybrid/EV", "Explainable AI"]
-        }
-    ];
-
-    const experience = [
-        {
-            org: "National Renewable Energy Laboratory (NREL)",
-            role: "Researcher II — Data Science",
-            dept: "Center for Integrated Mobility Sciences",
-            time: "2023 — Present",
-            points: [
-                "Design physics‑guided ML for automotive R&D; lead open‑sourcing and outreach of T3CO.",
-                "Build reproducible data/ML pipelines (PostgreSQL, Python) and analytical dashboards for decision makers.",
-            ]
-        },
-        {
-            org: "Exergi Predictive",
-            role: "Senior Software Engineer / Data Scientist",
-            dept: "",
-            time: "2021 — 2023",
-            points: [
-                "Developed mission‑aware energy prediction stack combining physics equations with learning for complex environments.",
-                "Collaborated with DoD/DOE partners; delivered explainable estimates for route planning and range assurance."
-            ]
-        },
-        {
-            org: "Ford Motor Company",
-            role: "AI Engineer",
-            dept: "",
-            time: "2021 — 2023",
-            points: [
-                "Applied ML to powertrain/vehicle systems; contributed to model calibration and validation workflows."
-            ]
-        },
-        {
-            org: "University of Minnesota",
-            role: "Graduate Research Assistant",
-            dept: "MS, Mechanical Engineering",
-            time: "2020 — 2021",
-            points: [
-                "First‑author work on physics‑aware emissions modeling using OBD data; collaborated with ME and CS faculty."
-            ]
-        }
-    ];
-
-    const education = [
-        { school: "University of Minnesota — Twin Cities", degree: "M.S., Mechanical Engineering" },
-        { school: "IIT Madras", degree: "B.Tech., Chemical Engineering" }
+    const navItems = [
+        { path: "/", label: "Home", icon: <Home className="w-4 h-4" /> },
+        { path: "/publications", label: "Publications", icon: <BookOpen className="w-4 h-4" /> },
+        { path: "/experience", label: "Experience", icon: <Briefcase className="w-4 h-4" /> },
+        { path: "/projects", label: "Projects", icon: <Cpu className="w-4 h-4" /> },
+        { path: "/contact", label: "Contact", icon: <User className="w-4 h-4" /> }
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
-            {/* NAVBAR */}
-            <nav className="sticky top-0 z-50 backdrop-blur-md bg-neutral-950/90 border-b border-neutral-800/50">
-                <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <a href="#home" className="font-bold text-xl tracking-tight bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">
+        <nav className={`sticky top-0 z-50 backdrop-blur-md border-b transition-all duration-300 ${
+            isScrolled 
+                ? 'bg-neutral-950/95 border-neutral-800/50' 
+                : 'bg-neutral-950/90 border-neutral-800/30'
+        }`}>
+            <div className="max-w-7xl mx-auto px-6 py-4">
+                <div className="flex items-center justify-between">
+                    <Link to="/" className="font-bold text-xl tracking-tight bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">
                         Harish Panneer Selvam
-                    </a>
+                    </Link>
                     <div className="flex items-center gap-6 text-sm">
-                        <a href="#projects" className="hover:text-white transition-colors">Projects</a>
-                        <a href="#experience" className="hover:text-white transition-colors">Experience</a>
-                        <a href="#publications" className="hover:text-white transition-colors">Publications</a>
-                        <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.path}
+                                to={item.path}
+                                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                                    location.pathname === item.path
+                                        ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30'
+                                        : 'hover:text-white hover:bg-neutral-800/50'
+                                }`}
+                            >
+                                {item.icon}
+                                <span className="hidden md:inline">{item.label}</span>
+                            </Link>
+                        ))}
                     </div>
                 </div>
-            </nav>
+            </div>
+        </nav>
+    );
+}
 
+// Home Page Component
+function HomePage() {
+    const [year, setYear] = useState(2025);
+    useEffect(() => setYear(new Date().getFullYear()), []);
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
             {/* HERO */}
-            <header id="home" className="max-w-7xl mx-auto px-6 py-24">
+            <header className="max-w-7xl mx-auto px-6 py-24">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
                     <div className="space-y-8">
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-full text-sm">
                             <Rocket className="w-4 h-4" />
                             Physics-guided ML for vehicles, energy & mission-critical systems
                         </div>
-
+                        
                         <div className="space-y-6">
                             <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
                                 Building reliable, <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">explainable</span> ML for vehicles, energy, and <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">mission‑critical</span> decisions.
                             </h1>
-
+                            
                             <p className="text-xl text-neutral-300 leading-relaxed max-w-2xl">
                                 I'm a mechanical engineering generalist who codes: I ship production‑grade data/ML systems and build decision tools that combine first‑principles physics with modern AI.
                             </p>
                         </div>
 
                         <div className="flex flex-wrap gap-4">
-                            <a href="#projects" className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg">
+                            <Link to="/projects" className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg">
                                 Explore My Work <ArrowRight className="w-4 h-4" />
-                            </a>
-                            <a href="#contact" className="inline-flex items-center gap-2 border border-neutral-700 px-6 py-3 rounded-xl hover:bg-neutral-800 transition-colors">
+                            </Link>
+                            <Link to="/contact" className="inline-flex items-center gap-2 border border-neutral-700 px-6 py-3 rounded-xl hover:bg-neutral-800 transition-colors">
                                 Get in Touch <Mail className="w-4 h-4" />
-                            </a>
+                            </Link>
                         </div>
 
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-8">
@@ -231,13 +151,13 @@ export default function Portfolio() {
                     <h2 className="text-3xl font-bold mb-4">Areas of Expertise</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Combining mechanical engineering fundamentals with modern software and ML practices</p>
                 </div>
-
+                
                 <div className="grid md:grid-cols-2 gap-6">
                     {skills.map((s) => (
                         <div key={s.group} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="p-2 rounded-lg bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-blue-500/30">
-                                    {s.icon}
+                                    <Cpu className="w-5 h-5" />
                                 </div>
                                 <h3 className="text-lg font-semibold text-white">{s.group}</h3>
                             </div>
@@ -251,137 +171,40 @@ export default function Portfolio() {
                 </div>
             </section>
 
-            {/* PROJECTS */}
-            <section id="projects" className="max-w-7xl mx-auto px-6 py-16">
+            {/* FEATURED PROJECTS */}
+            <section className="max-w-7xl mx-auto px-6 py-16">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl font-bold mb-4">Featured Projects</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Selected work combining physics, ML, and software engineering</p>
                 </div>
-
+                
                 <div className="grid lg:grid-cols-2 gap-8">
-                    {projects.map((p) => (
-                        <article key={p.title} className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${p.highlight
-                                ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10'
-                                : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
-                            }`}>
-                            {p.highlight && (
-                                <div className="flex items-center gap-2 mb-4">
-                                    <Zap className="w-4 h-4 text-yellow-400" />
-                                    <span className="text-xs font-medium text-yellow-400">Featured Project</span>
-                                </div>
-                            )}
-
+                    {projects.filter(p => p.highlight).map((p) => (
+                        <article key={p.title} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border border-blue-500/30 shadow-lg shadow-blue-500/10 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02]">
+                            <div className="flex items-center gap-2 mb-4">
+                                <Zap className="w-4 h-4 text-yellow-400" />
+                                <span className="text-xs font-medium text-yellow-400">Featured Project</span>
+                            </div>
+                            
                             <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
                             <p className="text-sm text-neutral-400 mb-3">{p.role}</p>
                             <p className="text-neutral-300 mb-4 leading-relaxed">{p.blurb}</p>
-
+                            
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {p.tags.map((t) => (
                                     <span key={t} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">{t}</span>
                                 ))}
                             </div>
-
+                            
                             <div className="flex flex-wrap gap-4 text-sm">
                                 {p.links.map((l) => (
                                     <a key={l.href} href={l.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
-                                        {l.icon}{l.label}
+                                        <ExternalLink className="w-4 h-4" />{l.label}
                                     </a>
                                 ))}
                             </div>
                         </article>
                     ))}
-                </div>
-            </section>
-
-            {/* EXPERIENCE */}
-            <section id="experience" className="max-w-7xl mx-auto px-6 py-16">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold mb-4">Professional Experience</h2>
-                    <p className="text-neutral-400 max-w-2xl mx-auto">Building impactful solutions at the intersection of engineering and AI</p>
-                </div>
-
-                <div className="space-y-6">
-                    {experience.map((e) => (
-                        <div key={e.org} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
-                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
-                                <div>
-                                    <h3 className="text-xl font-semibold text-white">{e.role}</h3>
-                                    <p className="text-lg text-neutral-300">{e.org}</p>
-                                    {e.dept && <p className="text-sm text-neutral-400">{e.dept}</p>}
-                                </div>
-                                <div className="text-sm text-neutral-400 bg-neutral-800/50 px-3 py-1 rounded-full">
-                                    {e.time}
-                                </div>
-                            </div>
-                            <ul className="space-y-2 text-neutral-300">
-                                {e.points.map((pt, idx) => (
-                                    <li key={idx} className="flex items-start gap-3">
-                                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                                        <span>{pt}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* PUBLICATIONS */}
-            <section id="publications" className="max-w-7xl mx-auto px-6 py-16">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold mb-4">Publications & Press</h2>
-                    <p className="text-neutral-400 max-w-2xl mx-auto">Research contributions and media coverage</p>
-                </div>
-
-                <div className="grid gap-4">
-                    <PubItem title="Vehicle Emissions Prediction with Physics‑Aware AI Models: Preliminary Results" venue="arXiv, 2021" href="https://arxiv.org/abs/2105.00375" />
-                    <PubItem title="Physics‑based ML framework for predicting NOx emissions from CI engines using OBD data" venue="arXiv, 2025" href="https://arxiv.org/abs/2503.05648" />
-                    <PubItem title="NREL news: Commercial EV Cost‑of‑Ownership tool is best‑in‑class—and free" venue="NREL News, 2024" href="https://www.nrel.gov/news/detail/program/2024/nrels-commercial-electric-vehicle-cost-of-ownership-tool-is-best-in-class-and-free" />
-                    <PubItem title="Charged EVs: NREL's free analysis tool helps fleets calculate TCO for EVs" venue="Charged EVs, 2024" href="https://chargedevs.com/newswire/nrels-free-analysis-tool-helps-fleets-calculate-tco-for-evs/" />
-                    <PubItem title="Technical report: Vehicle Emissions Prediction with Physics‑Aware AI Models" venue="UMN Conservancy, 2021" href="https://conservancy.umn.edu/server/api/core/bitstreams/15a28ede-bcd7-48a5-8909-42886ce00934/content" />
-                </div>
-            </section>
-
-            {/* EDUCATION */}
-            <section className="max-w-7xl mx-auto px-6 py-16">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold mb-4">Education</h2>
-                    <p className="text-neutral-400 max-w-2xl mx-auto">Academic foundation in engineering and technology</p>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                    {education.map((ed) => (
-                        <div key={ed.school} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
-                            <div className="flex items-center gap-3 mb-3">
-                                <Users className="w-5 h-5 text-blue-400" />
-                                <h3 className="text-lg font-semibold text-white">{ed.school}</h3>
-                            </div>
-                            <p className="text-neutral-300">{ed.degree}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* CONTACT */}
-            <section id="contact" className="max-w-7xl mx-auto px-6 py-16">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold mb-4">Get in Touch</h2>
-                    <p className="text-neutral-400 max-w-2xl mx-auto">Interested in physics-guided ML, vehicle systems, or energy optimization? Let's connect.</p>
-                </div>
-
-                <div className="flex flex-wrap justify-center gap-4 text-sm">
-                    <a className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 hover:bg-neutral-800/50 transition-all duration-200" href="mailto:harish.panneerselvam@nrel.gov">
-                        <Mail className="w-4 h-4" /> harish.panneerselvam@nrel.gov
-                    </a>
-                    <a className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 hover:bg-neutral-800/50 transition-all duration-200" href="https://github.com/panne027">
-                        <Github className="w-4 h-4" /> github.com/panne027
-                    </a>
-                    <a className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 hover:bg-neutral-800/50 transition-all duration-200" href="#">
-                        <Linkedin className="w-4 h-4" /> LinkedIn
-                    </a>
-                    <a className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 hover:bg-neutral-800/50 transition-all duration-200" href="#">
-                        <FileText className="w-4 h-4" /> Résumé
-                    </a>
                 </div>
             </section>
 
@@ -394,16 +217,376 @@ export default function Portfolio() {
     );
 }
 
-function PubItem({ title, venue, href }) {
+// Publications Page Component
+function PublicationsPage() {
+    const [selectedCategory, setSelectedCategory] = useState('all');
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const categories = [
+        { id: 'all', label: 'All Publications', count: publications.length + pressCoverage.length },
+        { id: 'patents', label: 'Patents', count: publicationCategories.patents.length },
+        { id: 'journals', label: 'Journal Papers', count: publicationCategories.journals.length },
+        { id: 'conferences', label: 'Conference Papers', count: publicationCategories.conferences.length },
+        { id: 'preprints', label: 'Preprints', count: publicationCategories.preprints.length },
+        { id: 'thesis', label: 'Thesis', count: publicationCategories.thesis.length },
+        { id: 'press', label: 'Press Coverage', count: publicationCategories.press.length }
+    ];
+
+    const filteredPublications = [...publications, ...pressCoverage].filter(pub => {
+        const matchesCategory = selectedCategory === 'all' || 
+            (selectedCategory === 'press' ? pressCoverage.includes(pub) : 
+             publications.filter(p => p.type === selectedCategory).includes(pub));
+        const matchesSearch = pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            pub.authors?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            pub.venue?.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
+
     return (
-        <a href={href} className="group p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 hover:bg-neutral-800/50 transition-all duration-200 backdrop-blur-sm">
-            <div className="flex items-center justify-between gap-4">
-                <div className="flex-1">
-                    <div className="font-medium text-white group-hover:text-blue-300 transition-colors">{title}</div>
-                    <div className="text-sm text-neutral-400 mt-1">{venue}</div>
+        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <div className="max-w-7xl mx-auto px-6 py-16">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl font-bold mb-4">Publications & Research</h1>
+                    <p className="text-neutral-400 max-w-2xl mx-auto">Comprehensive collection of research papers, patents, and press coverage</p>
                 </div>
-                <ExternalLink className="w-5 h-5 text-neutral-500 group-hover:text-blue-400 transition-colors" />
+
+                {/* Filters */}
+                <div className="mb-8 space-y-4">
+                    <div className="flex flex-wrap gap-2">
+                        {categories.map(cat => (
+                            <button
+                                key={cat.id}
+                                onClick={() => setSelectedCategory(cat.id)}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                    selectedCategory === cat.id
+                                        ? 'bg-blue-600 text-white'
+                                        : 'bg-neutral-800/50 text-neutral-300 hover:bg-neutral-700/50'
+                                }`}
+                            >
+                                {cat.label} ({cat.count})
+                            </button>
+                        ))}
+                    </div>
+                    
+                    <div className="relative max-w-md mx-auto">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
+                        <input
+                            type="text"
+                            placeholder="Search publications..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 bg-neutral-800/50 border border-neutral-700/50 rounded-lg text-neutral-100 placeholder-neutral-400 focus:outline-none focus:border-blue-500"
+                        />
+                    </div>
+                </div>
+
+                {/* Publications Grid */}
+                <div className="grid gap-6">
+                    {filteredPublications.map((pub) => (
+                        <PublicationCard key={pub.id} publication={pub} />
+                    ))}
+                </div>
             </div>
-        </a>
+        </div>
+    );
+}
+
+// Publication Card Component
+function PublicationCard({ publication }) {
+    const getTypeIcon = (type) => {
+        switch (type) {
+            case 'patent': return <FileText className="w-5 h-5 text-green-400" />;
+            case 'journal': return <BookOpen className="w-5 h-5 text-blue-400" />;
+            case 'conference': return <Users className="w-5 h-5 text-purple-400" />;
+            case 'preprint': return <Globe className="w-5 h-5 text-orange-400" />;
+            case 'thesis': return <Award className="w-5 h-5 text-pink-400" />;
+            default: return <ExternalLink className="w-5 h-5 text-neutral-400" />;
+        }
+    };
+
+    return (
+        <div className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${
+            publication.highlight 
+                ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10' 
+                : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
+        }`}>
+            <div className="flex items-start gap-4">
+                {/* Thumbnail */}
+                <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-700 border border-neutral-600 flex items-center justify-center flex-shrink-0">
+                    {getTypeIcon(publication.type)}
+                </div>
+                
+                {/* Content */}
+                <div className="flex-1 space-y-3">
+                    <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                            <h3 className="text-lg font-semibold text-white mb-1">{publication.title}</h3>
+                            {publication.authors && (
+                                <p className="text-sm text-neutral-400 mb-2">{publication.authors}</p>
+                            )}
+                            <div className="flex items-center gap-4 text-sm text-neutral-500">
+                                <span className="flex items-center gap-1">
+                                    <Calendar className="w-4 h-4" />
+                                    {publication.year}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <Tag className="w-4 h-4" />
+                                    {publication.venue}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        {publication.highlight && (
+                            <div className="flex items-center gap-2">
+                                <Zap className="w-4 h-4 text-yellow-400" />
+                                <span className="text-xs font-medium text-yellow-400">Featured</span>
+                            </div>
+                        )}
+                    </div>
+                    
+                    {publication.description && (
+                        <p className="text-neutral-300 text-sm leading-relaxed">{publication.description}</p>
+                    )}
+                    
+                    <div className="flex flex-wrap gap-2">
+                        {publication.tags?.map((tag) => (
+                            <span key={tag} className="text-xs px-2 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-4 text-sm">
+                        {publication.links?.map((link) => (
+                            <a key={link.href} href={link.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
+                                <ExternalLink className="w-4 h-4" />
+                                {link.label}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// Experience Page Component
+function ExperiencePage() {
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <div className="max-w-7xl mx-auto px-6 py-16">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl font-bold mb-4">Professional Experience</h1>
+                    <p className="text-neutral-400 max-w-2xl mx-auto">Building impactful solutions at the intersection of engineering and AI</p>
+                </div>
+                
+                <div className="space-y-8">
+                    {experience.map((e) => (
+                        <div key={e.org} className={`p-6 rounded-2xl border backdrop-blur-sm ${
+                            e.highlight 
+                                ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10' 
+                                : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
+                        }`}>
+                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                                <div>
+                                    <h3 className="text-xl font-semibold text-white">{e.role}</h3>
+                                    <p className="text-lg text-neutral-300">{e.org}</p>
+                                    {e.dept && <p className="text-sm text-neutral-400">{e.dept}</p>}
+                                    <p className="text-sm text-neutral-400">{e.location}</p>
+                                </div>
+                                <div className="text-sm text-neutral-400 bg-neutral-800/50 px-3 py-1 rounded-full">
+                                    {e.time}
+                                </div>
+                            </div>
+                            
+                            <ul className="space-y-3 text-neutral-300 mb-6">
+                                {e.points.map((pt, idx) => (
+                                    <li key={idx} className="flex items-start gap-3">
+                                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                                        <span>{pt}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                            
+                            <div className="flex flex-wrap gap-2">
+                                {e.technologies?.map((tech) => (
+                                    <span key={tech} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">
+                                        {tech}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Education Section */}
+                <div className="mt-16">
+                    <div className="text-center mb-8">
+                        <h2 className="text-3xl font-bold mb-4">Education</h2>
+                        <p className="text-neutral-400 max-w-2xl mx-auto">Academic foundation in engineering and technology</p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-6">
+                        {education.map((ed) => (
+                            <div key={ed.school} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
+                                <div className="flex items-center gap-3 mb-3">
+                                    <Users className="w-5 h-5 text-blue-400" />
+                                    <h3 className="text-lg font-semibold text-white">{ed.school}</h3>
+                                </div>
+                                <p className="text-neutral-300 mb-2">{ed.degree}</p>
+                                <p className="text-sm text-neutral-400 mb-2">{ed.location}</p>
+                                <p className="text-sm text-neutral-400">{ed.time}</p>
+                                {ed.minor && <p className="text-sm text-neutral-400 mt-2">Minor: {ed.minor}</p>}
+                                {ed.thesis && <p className="text-sm text-neutral-400 mt-2">Thesis: {ed.thesis}</p>}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// Projects Page Component
+function ProjectsPage() {
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <div className="max-w-7xl mx-auto px-6 py-16">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl font-bold mb-4">Projects & Research</h1>
+                    <p className="text-neutral-400 max-w-2xl mx-auto">Selected work combining physics, ML, and software engineering</p>
+                </div>
+                
+                <div className="grid lg:grid-cols-2 gap-8">
+                    {projects.map((p) => (
+                        <article key={p.title} className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${
+                            p.highlight 
+                                ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10' 
+                                : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
+                        }`}>
+                            {p.highlight && (
+                                <div className="flex items-center gap-2 mb-4">
+                                    <Zap className="w-4 h-4 text-yellow-400" />
+                                    <span className="text-xs font-medium text-yellow-400">Featured Project</span>
+                                </div>
+                            )}
+                            
+                            <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
+                            <p className="text-sm text-neutral-400 mb-3">{p.role}</p>
+                            <p className="text-neutral-300 mb-4 leading-relaxed">{p.blurb}</p>
+                            
+                            <div className="flex flex-wrap gap-2 mb-4">
+                                {p.tags.map((t) => (
+                                    <span key={t} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">{t}</span>
+                                ))}
+                            </div>
+                            
+                            <div className="flex flex-wrap gap-4 text-sm">
+                                {p.links.map((l) => (
+                                    <a key={l.href} href={l.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
+                                        <ExternalLink className="w-4 h-4" />
+                                        {l.label}
+                                    </a>
+                                ))}
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// Contact Page Component
+function ContactPage() {
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <div className="max-w-7xl mx-auto px-6 py-16">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
+                    <p className="text-neutral-400 max-w-2xl mx-auto">Interested in physics-guided ML, vehicle systems, or energy optimization? Let's connect.</p>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-6">
+                        <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
+                            <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3">
+                                    <Mail className="w-5 h-5 text-blue-400" />
+                                    <div>
+                                        <p className="font-medium">Email</p>
+                                        <p className="text-sm text-neutral-400">harish.panneerselvam@nrel.gov</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Github className="w-5 h-5 text-purple-400" />
+                                    <div>
+                                        <p className="font-medium">GitHub</p>
+                                        <p className="text-sm text-neutral-400">github.com/panne027</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Linkedin className="w-5 h-5 text-blue-500" />
+                                    <div>
+                                        <p className="font-medium">LinkedIn</p>
+                                        <p className="text-sm text-neutral-400">linkedin.com/in/harish-panneer-selvam</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <FileText className="w-5 h-5 text-green-400" />
+                                    <div>
+                                        <p className="font-medium">Resume</p>
+                                        <p className="text-sm text-neutral-400">Download PDF</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="space-y-6">
+                        <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
+                            <h3 className="text-xl font-semibold mb-4">Areas of Collaboration</h3>
+                            <div className="space-y-3">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                                    <span>Physics-guided machine learning</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                                    <span>Vehicle energy & emissions modeling</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                                    <span>Fleet electrification & optimization</span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
+                                    <span>Data engineering & MLOps</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// Main App Component
+export default function App() {
+    return (
+        <Router>
+            <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+                <Navigation />
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/publications" element={<PublicationsPage />} />
+                    <Route path="/experience" element={<ExperiencePage />} />
+                    <Route path="/projects" element={<ProjectsPage />} />
+                    <Route path="/contact" element={<ContactPage />} />
+                </Routes>
+            </div>
+        </Router>
     );
 }
