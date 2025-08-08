@@ -774,7 +774,7 @@ function ContactSection() {
                                         <p className="text-sm text-neutral-400">https://www.linkedin.com/in/harish-panneerselvam/</p>
                                     </div>
                                 </a>
-                                <a href="public/Harish_Panneer_Selvam__Resume_2025.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
+                                <a href="/Harish_Panneer_Selvam__Resume_2025.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
                                     <FileText className="w-5 h-5 text-green-400" />
                                     <div>
                                         <p className="font-medium">Resume</p>
