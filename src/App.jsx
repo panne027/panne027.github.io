@@ -1,70 +1,111 @@
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
     ArrowRight, Github, Linkedin, Mail, FileText, ExternalLink, Newspaper,
     Cpu, Car, Battery, BrainCircuit, Rocket, Award, Users, Globe, Zap,
-    Home, BookOpen, Briefcase, User, Search, Filter, Calendar, Tag
+    Home, BookOpen, Briefcase, User, Search, Filter, Calendar, Tag, ChevronUp
 } from "lucide-react";
 import { publications, pressCoverage, researchProjects, publicationCategories } from "./data/publications.js";
 import { experience, education, skills, projects } from "./data/experience.js";
 
-// Navigation Component
-function Navigation() {
-    const location = useLocation();
-    const [isScrolled, setIsScrolled] = useState(false);
+// Floating Navigation Component
+function FloatingNavigation() {
+    const [isVisible, setIsVisible] = useState(false);
+    const [activeSection, setActiveSection] = useState('home');
 
     useEffect(() => {
-        const handleScroll = () => setIsScrolled(window.scrollY > 10);
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            setIsVisible(scrollY > 100);
+
+            // Determine active section based on scroll position
+            const sections = ['home', 'publications', 'experience', 'projects', 'contact'];
+            const sectionElements = sections.map(id => document.getElementById(id));
+            
+            for (let i = sections.length - 1; i >= 0; i--) {
+                const element = sectionElements[i];
+                if (element && element.offsetTop <= scrollY + 200) {
+                    setActiveSection(sections[i]);
+                    break;
+                }
+            }
+        };
+
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const navItems = [
-        { path: "/", label: "Home", icon: <Home className="w-4 h-4" /> },
-        { path: "/publications", label: "Publications", icon: <BookOpen className="w-4 h-4" /> },
-        { path: "/experience", label: "Experience", icon: <Briefcase className="w-4 h-4" /> },
-        { path: "/projects", label: "Projects", icon: <Cpu className="w-4 h-4" /> },
-        { path: "/contact", label: "Contact", icon: <User className="w-4 h-4" /> }
+        { id: 'home', label: "Home", icon: <Home className="w-4 h-4" /> },
+        { id: 'publications', label: "Publications", icon: <BookOpen className="w-4 h-4" /> },
+        { id: 'experience', label: "Experience", icon: <Briefcase className="w-4 h-4" /> },
+        { id: 'projects', label: "Projects", icon: <Cpu className="w-4 h-4" /> },
+        { id: 'contact', label: "Contact", icon: <User className="w-4 h-4" /> }
     ];
 
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    if (!isVisible) return null;
+
     return (
-        <nav className={`sticky top-0 z-50 backdrop-blur-md border-b transition-all duration-300 ${isScrolled
-            ? 'bg-neutral-950/95 border-neutral-800/50'
-            : 'bg-neutral-950/90 border-neutral-800/30'
-            }`}>
-            <div className="max-w-7xl mx-auto px-6 py-4">
-                <div className="flex items-center justify-between">
-                    <Link to="/" className="font-bold text-xl tracking-tight bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">
-                        Harish Panneer Selvam
-                    </Link>
-                    <div className="flex items-center gap-6 text-sm">
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.path}
-                                to={item.path}
-                                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${location.pathname === item.path
-                                    ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30'
-                                    : 'hover:text-white hover:bg-neutral-800/50'
-                                    }`}
-                            >
-                                {item.icon}
-                                <span className="hidden md:inline">{item.label}</span>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
+            <div className="flex items-center gap-2 px-4 py-3 bg-neutral-950/90 backdrop-blur-md border border-neutral-700/50 rounded-full shadow-lg">
+                {navItems.map((item) => (
+                    <button
+                        key={item.id}
+                        onClick={() => scrollToSection(item.id)}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
+                            activeSection === item.id
+                                ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30'
+                                : 'text-neutral-300 hover:text-white hover:bg-neutral-800/50'
+                        }`}
+                    >
+                        {item.icon}
+                        <span className="hidden md:inline text-sm">{item.label}</span>
+                    </button>
+                ))}
             </div>
-        </nav>
+        </div>
     );
 }
 
-// Home Page Component
-function HomePage() {
+// Scroll to Top Button
+function ScrollToTop() {
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => setIsVisible(window.scrollY > 300);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    if (!isVisible) return null;
+
+    return (
+        <button
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 z-50 p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg transition-all duration-200 hover:scale-110"
+        >
+            <ChevronUp className="w-5 h-5" />
+        </button>
+    );
+}
+
+// Home Section Component
+function HomeSection() {
     const [year, setYear] = useState(2025);
     useEffect(() => setYear(new Date().getFullYear()), []);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+        <section id="home" className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
             {/* HERO */}
             <header className="max-w-7xl mx-auto px-6 py-24">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -73,24 +114,24 @@ function HomePage() {
                             <Rocket className="w-4 h-4" />
                             Physics-guided ML for vehicles, energy & mission-critical systems
                         </div>
-
+                        
                         <div className="space-y-6">
                             <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
                                 Building reliable, <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">explainable</span> ML for vehicles, energy, and <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">mission‑critical</span> decisions.
                             </h1>
-
+                            
                             <p className="text-xl text-neutral-300 leading-relaxed max-w-2xl">
                                 I'm a mechanical engineering generalist who codes: I ship production‑grade data/ML systems and build decision tools that combine first‑principles physics with modern AI.
                             </p>
                         </div>
 
                         <div className="flex flex-wrap gap-4">
-                            <Link to="/projects" className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg">
+                            <button onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg">
                                 Explore My Work <ArrowRight className="w-4 h-4" />
-                            </Link>
-                            <Link to="/contact" className="inline-flex items-center gap-2 border border-neutral-700 px-6 py-3 rounded-xl hover:bg-neutral-800 transition-colors">
+                            </button>
+                            <button onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-2 border border-neutral-700 px-6 py-3 rounded-xl hover:bg-neutral-800 transition-colors">
                                 Get in Touch <Mail className="w-4 h-4" />
-                            </Link>
+                            </button>
                         </div>
 
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-8">
@@ -149,7 +190,7 @@ function HomePage() {
                     <h2 className="text-3xl font-bold mb-4">Areas of Expertise</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Combining mechanical engineering fundamentals with modern software and ML practices</p>
                 </div>
-
+                
                 <div className="grid md:grid-cols-2 gap-6">
                     {skills.map((s) => (
                         <div key={s.group} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
@@ -168,55 +209,12 @@ function HomePage() {
                     ))}
                 </div>
             </section>
-
-            {/* FEATURED PROJECTS */}
-            <section className="max-w-7xl mx-auto px-6 py-16">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold mb-4">Featured Projects</h2>
-                    <p className="text-neutral-400 max-w-2xl mx-auto">Selected work combining physics, ML, and software engineering</p>
-                </div>
-
-                <div className="grid lg:grid-cols-2 gap-8">
-                    {projects.filter(p => p.highlight).map((p) => (
-                        <article key={p.title} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border border-blue-500/30 shadow-lg shadow-blue-500/10 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02]">
-                            <div className="flex items-center gap-2 mb-4">
-                                <Zap className="w-4 h-4 text-yellow-400" />
-                                <span className="text-xs font-medium text-yellow-400">Featured Project</span>
-                            </div>
-
-                            <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
-                            <p className="text-sm text-neutral-400 mb-3">{p.role}</p>
-                            <p className="text-neutral-300 mb-4 leading-relaxed">{p.blurb}</p>
-
-                            <div className="flex flex-wrap gap-2 mb-4">
-                                {p.tags.map((t) => (
-                                    <span key={t} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">{t}</span>
-                                ))}
-                            </div>
-
-                            <div className="flex flex-wrap gap-4 text-sm">
-                                {p.links.map((l) => (
-                                    <a key={l.href} href={l.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
-                                        <ExternalLink className="w-4 h-4" />{l.label}
-                                    </a>
-                                ))}
-                            </div>
-                        </article>
-                    ))}
-                </div>
-            </section>
-
-            <footer className="py-12 text-center border-t border-neutral-800/50 bg-neutral-950/50">
-                <div className="max-w-7xl mx-auto px-6">
-                    <p className="text-sm text-neutral-500">© {year} Harish Panneer Selvam · Built with React & Tailwind CSS · Deployed on GitHub Pages</p>
-                </div>
-            </footer>
-        </div>
+        </section>
     );
 }
 
-// Publications Page Component
-function PublicationsPage() {
+// Publications Section Component
+function PublicationsSection() {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -241,10 +239,10 @@ function PublicationsPage() {
     });
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
-            <div className="max-w-7xl mx-auto px-6 py-16">
+        <section id="publications" className="py-16 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold mb-4">Publications & Research</h1>
+                    <h2 className="text-4xl font-bold mb-4">Publications & Research</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Comprehensive collection of research papers, patents, and press coverage</p>
                 </div>
 
@@ -264,7 +262,7 @@ function PublicationsPage() {
                             </button>
                         ))}
                     </div>
-
+                    
                     <div className="relative max-w-md mx-auto">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
                         <input
@@ -284,7 +282,7 @@ function PublicationsPage() {
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
@@ -311,7 +309,7 @@ function PublicationCard({ publication }) {
                 <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-700 border border-neutral-600 flex items-center justify-center flex-shrink-0">
                     {getTypeIcon(publication.type)}
                 </div>
-
+                
                 {/* Content */}
                 <div className="flex-1 space-y-3">
                     <div className="flex items-start justify-between gap-4">
@@ -331,7 +329,7 @@ function PublicationCard({ publication }) {
                                 </span>
                             </div>
                         </div>
-
+                        
                         {publication.highlight && (
                             <div className="flex items-center gap-2">
                                 <Zap className="w-4 h-4 text-yellow-400" />
@@ -339,11 +337,11 @@ function PublicationCard({ publication }) {
                             </div>
                         )}
                     </div>
-
+                    
                     {publication.description && (
                         <p className="text-neutral-300 text-sm leading-relaxed">{publication.description}</p>
                     )}
-
+                    
                     <div className="flex flex-wrap gap-2">
                         {publication.tags?.map((tag) => (
                             <span key={tag} className="text-xs px-2 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">
@@ -351,7 +349,7 @@ function PublicationCard({ publication }) {
                             </span>
                         ))}
                     </div>
-
+                    
                     <div className="flex flex-wrap gap-4 text-sm">
                         {publication.links?.map((link) => (
                             <a key={link.href} href={link.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
@@ -366,16 +364,16 @@ function PublicationCard({ publication }) {
     );
 }
 
-// Experience Page Component
-function ExperiencePage() {
+// Experience Section Component
+function ExperienceSection() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
-            <div className="max-w-7xl mx-auto px-6 py-16">
+        <section id="experience" className="py-16 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold mb-4">Professional Experience</h1>
+                    <h2 className="text-4xl font-bold mb-4">Professional Experience</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Building impactful solutions at the intersection of engineering and AI</p>
                 </div>
-
+                
                 <div className="space-y-8">
                     {experience.map((e) => (
                         <div key={e.org} className={`p-6 rounded-2xl border backdrop-blur-sm ${e.highlight
@@ -393,7 +391,7 @@ function ExperiencePage() {
                                     {e.time}
                                 </div>
                             </div>
-
+                            
                             <ul className="space-y-3 text-neutral-300 mb-6">
                                 {e.points.map((pt, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
@@ -402,7 +400,7 @@ function ExperiencePage() {
                                     </li>
                                 ))}
                             </ul>
-
+                            
                             <div className="flex flex-wrap gap-2">
                                 {e.technologies?.map((tech) => (
                                     <span key={tech} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">
@@ -417,16 +415,16 @@ function ExperiencePage() {
                 {/* Education Section */}
                 <div className="mt-16">
                     <div className="text-center mb-8">
-                        <h2 className="text-3xl font-bold mb-4">Education</h2>
+                        <h3 className="text-3xl font-bold mb-4">Education</h3>
                         <p className="text-neutral-400 max-w-2xl mx-auto">Academic foundation in engineering and technology</p>
                     </div>
-
+                    
                     <div className="grid md:grid-cols-2 gap-6">
                         {education.map((ed) => (
                             <div key={ed.school} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
                                 <div className="flex items-center gap-3 mb-3">
                                     <Users className="w-5 h-5 text-blue-400" />
-                                    <h3 className="text-lg font-semibold text-white">{ed.school}</h3>
+                                    <h4 className="text-lg font-semibold text-white">{ed.school}</h4>
                                 </div>
                                 <p className="text-neutral-300 mb-2">{ed.degree}</p>
                                 <p className="text-sm text-neutral-400 mb-2">{ed.location}</p>
@@ -438,20 +436,20 @@ function ExperiencePage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
-// Projects Page Component
-function ProjectsPage() {
+// Projects Section Component
+function ProjectsSection() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
-            <div className="max-w-7xl mx-auto px-6 py-16">
+        <section id="projects" className="py-16 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold mb-4">Projects & Research</h1>
+                    <h2 className="text-4xl font-bold mb-4">Projects & Research</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Selected work combining physics, ML, and software engineering</p>
                 </div>
-
+                
                 <div className="grid lg:grid-cols-2 gap-8">
                     {projects.map((p) => (
                         <article key={p.title} className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${p.highlight
@@ -464,17 +462,17 @@ function ProjectsPage() {
                                     <span className="text-xs font-medium text-yellow-400">Featured Project</span>
                                 </div>
                             )}
-
+                            
                             <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
                             <p className="text-sm text-neutral-400 mb-3">{p.role}</p>
                             <p className="text-neutral-300 mb-4 leading-relaxed">{p.blurb}</p>
-
+                            
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {p.tags.map((t) => (
                                     <span key={t} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">{t}</span>
                                 ))}
                             </div>
-
+                            
                             <div className="flex flex-wrap gap-4 text-sm">
                                 {p.links.map((l) => (
                                     <a key={l.href} href={l.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
@@ -487,17 +485,17 @@ function ProjectsPage() {
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
-// Contact Page Component
-function ContactPage() {
+// Contact Section Component
+function ContactSection() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
-            <div className="max-w-7xl mx-auto px-6 py-16">
+        <section id="contact" className="py-16 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <div className="max-w-7xl mx-auto px-6">
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
+                    <h2 className="text-4xl font-bold mb-4">Get in Touch</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Interested in physics-guided ML, vehicle systems, or energy optimization? Let's connect.</p>
                 </div>
                 
@@ -506,11 +504,11 @@ function ContactPage() {
                         <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
                             <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
                             <div className="space-y-4">
-                                <a href="mailto:harish.panneerselvam@nrel.gov" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
+                                <a href="mailto:harishpanselvam@gmail.com" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
                                     <Mail className="w-5 h-5 text-blue-400" />
                                     <div>
                                         <p className="font-medium">Email</p>
-                                        <p className="text-sm text-neutral-400">harish.panneerselvam@nrel.gov</p>
+                                        <p className="text-sm text-neutral-400">harishpanselvam@gmail.com</p>
                                     </div>
                                 </a>
                                 <a href="https://github.com/panne027" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
@@ -520,11 +518,11 @@ function ContactPage() {
                                         <p className="text-sm text-neutral-400">github.com/panne027</p>
                                     </div>
                                 </a>
-                                <a href="https://linkedin.com/in/harish-panneer-selvam" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
+                                <a href="https://www.linkedin.com/in/harish-panneerselvam/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
                                     <Linkedin className="w-5 h-5 text-blue-500" />
                                     <div>
                                         <p className="font-medium">LinkedIn</p>
-                                        <p className="text-sm text-neutral-400">linkedin.com/in/harish-panneer-selvam</p>
+                                        <p className="text-sm text-neutral-400">https://www.linkedin.com/in/harish-panneerselvam/</p>
                                     </div>
                                 </a>
                                 <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
@@ -590,24 +588,28 @@ function ContactPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
 // Main App Component
 export default function App() {
     return (
-        <Router>
-            <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
-                <Navigation />
-                <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/publications" element={<PublicationsPage />} />
-                    <Route path="/experience" element={<ExperiencePage />} />
-                    <Route path="/projects" element={<ProjectsPage />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                </Routes>
-            </div>
-        </Router>
+        <div className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+            <FloatingNavigation />
+            <ScrollToTop />
+            
+            <HomeSection />
+            <PublicationsSection />
+            <ExperienceSection />
+            <ProjectsSection />
+            <ContactSection />
+            
+            <footer className="py-12 text-center border-t border-neutral-800/50 bg-neutral-950/50">
+                <div className="max-w-7xl mx-auto px-6">
+                    <p className="text-sm text-neutral-500">© 2025 Harish Panneer Selvam · Built with React & Tailwind CSS · Deployed on GitHub Pages</p>
+                </div>
+            </footer>
+        </div>
     );
 }
