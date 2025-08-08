@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { 
-    ArrowRight, Github, Linkedin, Mail, FileText, ExternalLink, Newspaper, 
+import {
+    ArrowRight, Github, Linkedin, Mail, FileText, ExternalLink, Newspaper,
     Cpu, Car, Battery, BrainCircuit, Rocket, Award, Users, Globe, Zap,
     Home, BookOpen, Briefcase, User, Search, Filter, Calendar, Tag
 } from "lucide-react";
@@ -28,11 +28,10 @@ function Navigation() {
     ];
 
     return (
-        <nav className={`sticky top-0 z-50 backdrop-blur-md border-b transition-all duration-300 ${
-            isScrolled 
-                ? 'bg-neutral-950/95 border-neutral-800/50' 
-                : 'bg-neutral-950/90 border-neutral-800/30'
-        }`}>
+        <nav className={`sticky top-0 z-50 backdrop-blur-md border-b transition-all duration-300 ${isScrolled
+            ? 'bg-neutral-950/95 border-neutral-800/50'
+            : 'bg-neutral-950/90 border-neutral-800/30'
+            }`}>
             <div className="max-w-7xl mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
                     <Link to="/" className="font-bold text-xl tracking-tight bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">
@@ -43,11 +42,10 @@ function Navigation() {
                             <Link
                                 key={item.path}
                                 to={item.path}
-                                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
-                                    location.pathname === item.path
-                                        ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30'
-                                        : 'hover:text-white hover:bg-neutral-800/50'
-                                }`}
+                                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${location.pathname === item.path
+                                    ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30'
+                                    : 'hover:text-white hover:bg-neutral-800/50'
+                                    }`}
                             >
                                 {item.icon}
                                 <span className="hidden md:inline">{item.label}</span>
@@ -75,12 +73,12 @@ function HomePage() {
                             <Rocket className="w-4 h-4" />
                             Physics-guided ML for vehicles, energy & mission-critical systems
                         </div>
-                        
+
                         <div className="space-y-6">
                             <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
                                 Building reliable, <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">explainable</span> ML for vehicles, energy, and <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">mission‑critical</span> decisions.
                             </h1>
-                            
+
                             <p className="text-xl text-neutral-300 leading-relaxed max-w-2xl">
                                 I'm a mechanical engineering generalist who codes: I ship production‑grade data/ML systems and build decision tools that combine first‑principles physics with modern AI.
                             </p>
@@ -151,7 +149,7 @@ function HomePage() {
                     <h2 className="text-3xl font-bold mb-4">Areas of Expertise</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Combining mechanical engineering fundamentals with modern software and ML practices</p>
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-6">
                     {skills.map((s) => (
                         <div key={s.group} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
@@ -177,7 +175,7 @@ function HomePage() {
                     <h2 className="text-3xl font-bold mb-4">Featured Projects</h2>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Selected work combining physics, ML, and software engineering</p>
                 </div>
-                
+
                 <div className="grid lg:grid-cols-2 gap-8">
                     {projects.filter(p => p.highlight).map((p) => (
                         <article key={p.title} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border border-blue-500/30 shadow-lg shadow-blue-500/10 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02]">
@@ -185,17 +183,17 @@ function HomePage() {
                                 <Zap className="w-4 h-4 text-yellow-400" />
                                 <span className="text-xs font-medium text-yellow-400">Featured Project</span>
                             </div>
-                            
+
                             <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
                             <p className="text-sm text-neutral-400 mb-3">{p.role}</p>
                             <p className="text-neutral-300 mb-4 leading-relaxed">{p.blurb}</p>
-                            
+
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {p.tags.map((t) => (
                                     <span key={t} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">{t}</span>
                                 ))}
                             </div>
-                            
+
                             <div className="flex flex-wrap gap-4 text-sm">
                                 {p.links.map((l) => (
                                     <a key={l.href} href={l.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
@@ -233,12 +231,12 @@ function PublicationsPage() {
     ];
 
     const filteredPublications = [...publications, ...pressCoverage].filter(pub => {
-        const matchesCategory = selectedCategory === 'all' || 
-            (selectedCategory === 'press' ? pressCoverage.includes(pub) : 
-             publications.filter(p => p.type === selectedCategory).includes(pub));
+        const matchesCategory = selectedCategory === 'all' ||
+            (selectedCategory === 'press' ? pressCoverage.includes(pub) :
+                publications.filter(p => p.type === selectedCategory).includes(pub));
         const matchesSearch = pub.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            pub.authors?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            pub.venue?.toLowerCase().includes(searchTerm.toLowerCase());
+            pub.authors?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            pub.venue?.toLowerCase().includes(searchTerm.toLowerCase());
         return matchesCategory && matchesSearch;
     });
 
@@ -257,17 +255,16 @@ function PublicationsPage() {
                             <button
                                 key={cat.id}
                                 onClick={() => setSelectedCategory(cat.id)}
-                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                    selectedCategory === cat.id
-                                        ? 'bg-blue-600 text-white'
-                                        : 'bg-neutral-800/50 text-neutral-300 hover:bg-neutral-700/50'
-                                }`}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${selectedCategory === cat.id
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-neutral-800/50 text-neutral-300 hover:bg-neutral-700/50'
+                                    }`}
                             >
                                 {cat.label} ({cat.count})
                             </button>
                         ))}
                     </div>
-                    
+
                     <div className="relative max-w-md mx-auto">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
                         <input
@@ -305,17 +302,16 @@ function PublicationCard({ publication }) {
     };
 
     return (
-        <div className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${
-            publication.highlight 
-                ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10' 
-                : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
-        }`}>
+        <div className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${publication.highlight
+            ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10'
+            : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
+            }`}>
             <div className="flex items-start gap-4">
                 {/* Thumbnail */}
                 <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-700 border border-neutral-600 flex items-center justify-center flex-shrink-0">
                     {getTypeIcon(publication.type)}
                 </div>
-                
+
                 {/* Content */}
                 <div className="flex-1 space-y-3">
                     <div className="flex items-start justify-between gap-4">
@@ -335,7 +331,7 @@ function PublicationCard({ publication }) {
                                 </span>
                             </div>
                         </div>
-                        
+
                         {publication.highlight && (
                             <div className="flex items-center gap-2">
                                 <Zap className="w-4 h-4 text-yellow-400" />
@@ -343,11 +339,11 @@ function PublicationCard({ publication }) {
                             </div>
                         )}
                     </div>
-                    
+
                     {publication.description && (
                         <p className="text-neutral-300 text-sm leading-relaxed">{publication.description}</p>
                     )}
-                    
+
                     <div className="flex flex-wrap gap-2">
                         {publication.tags?.map((tag) => (
                             <span key={tag} className="text-xs px-2 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">
@@ -355,7 +351,7 @@ function PublicationCard({ publication }) {
                             </span>
                         ))}
                     </div>
-                    
+
                     <div className="flex flex-wrap gap-4 text-sm">
                         {publication.links?.map((link) => (
                             <a key={link.href} href={link.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
@@ -379,14 +375,13 @@ function ExperiencePage() {
                     <h1 className="text-4xl font-bold mb-4">Professional Experience</h1>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Building impactful solutions at the intersection of engineering and AI</p>
                 </div>
-                
+
                 <div className="space-y-8">
                     {experience.map((e) => (
-                        <div key={e.org} className={`p-6 rounded-2xl border backdrop-blur-sm ${
-                            e.highlight 
-                                ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10' 
-                                : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
-                        }`}>
+                        <div key={e.org} className={`p-6 rounded-2xl border backdrop-blur-sm ${e.highlight
+                            ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10'
+                            : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
+                            }`}>
                             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
                                 <div>
                                     <h3 className="text-xl font-semibold text-white">{e.role}</h3>
@@ -398,7 +393,7 @@ function ExperiencePage() {
                                     {e.time}
                                 </div>
                             </div>
-                            
+
                             <ul className="space-y-3 text-neutral-300 mb-6">
                                 {e.points.map((pt, idx) => (
                                     <li key={idx} className="flex items-start gap-3">
@@ -407,7 +402,7 @@ function ExperiencePage() {
                                     </li>
                                 ))}
                             </ul>
-                            
+
                             <div className="flex flex-wrap gap-2">
                                 {e.technologies?.map((tech) => (
                                     <span key={tech} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">
@@ -425,7 +420,7 @@ function ExperiencePage() {
                         <h2 className="text-3xl font-bold mb-4">Education</h2>
                         <p className="text-neutral-400 max-w-2xl mx-auto">Academic foundation in engineering and technology</p>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-2 gap-6">
                         {education.map((ed) => (
                             <div key={ed.school} className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
@@ -456,31 +451,30 @@ function ProjectsPage() {
                     <h1 className="text-4xl font-bold mb-4">Projects & Research</h1>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Selected work combining physics, ML, and software engineering</p>
                 </div>
-                
+
                 <div className="grid lg:grid-cols-2 gap-8">
                     {projects.map((p) => (
-                        <article key={p.title} className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${
-                            p.highlight 
-                                ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10' 
-                                : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
-                        }`}>
+                        <article key={p.title} className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${p.highlight
+                            ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10'
+                            : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
+                            }`}>
                             {p.highlight && (
                                 <div className="flex items-center gap-2 mb-4">
                                     <Zap className="w-4 h-4 text-yellow-400" />
                                     <span className="text-xs font-medium text-yellow-400">Featured Project</span>
                                 </div>
                             )}
-                            
+
                             <h3 className="text-xl font-semibold mb-2">{p.title}</h3>
                             <p className="text-sm text-neutral-400 mb-3">{p.role}</p>
                             <p className="text-neutral-300 mb-4 leading-relaxed">{p.blurb}</p>
-                            
+
                             <div className="flex flex-wrap gap-2 mb-4">
                                 {p.tags.map((t) => (
                                     <span key={t} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">{t}</span>
                                 ))}
                             </div>
-                            
+
                             <div className="flex flex-wrap gap-4 text-sm">
                                 {p.links.map((l) => (
                                     <a key={l.href} href={l.href} className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
@@ -506,7 +500,7 @@ function ContactPage() {
                     <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Interested in physics-guided ML, vehicle systems, or energy optimization? Let's connect.</p>
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-6">
                         <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
@@ -543,7 +537,7 @@ function ContactPage() {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="space-y-6">
                         <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
                             <h3 className="text-xl font-semibold mb-4">Areas of Collaboration</h3>
