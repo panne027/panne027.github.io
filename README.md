@@ -1,77 +1,80 @@
 # Harish Panneer Selvam - Portfolio
 
-Personal portfolio website showcasing my work in physics-guided ML for vehicles, energy, and mission-critical decisions.
+[![Website](https://img.shields.io/badge/Website-panne027.github.io-blue?style=flat-square)](https://panne027.github.io/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Harish%20Panneer%20Selvam-blue?style=flat-square)](https://www.linkedin.com/in/harish-panneerselvam/)
+[![GitHub](https://img.shields.io/badge/GitHub-panne027-purple?style=flat-square)](https://github.com/panne027)
+[![ORCID](https://img.shields.io/badge/ORCID-0000--0002--9452--8185-green?style=flat-square)](https://orcid.org/0000-0002-9452-8185)
 
-## 🚀 Live Site
+## About
 
-Visit: [https://panne027.github.io](https://panne027.github.io)
+**Harish Panneer Selvam** is a mechanical engineering generalist who codes, specializing in physics-guided machine learning for vehicle systems, energy optimization, and fleet analytics. Currently working as a Researcher - Data Science at the National Renewable Energy Laboratory (NREL).
 
-## 🛠️ Local Development
+### Key Areas of Expertise
 
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
+- **Physics-Guided Machine Learning**: Combining first-principles physics with modern AI
+- **Vehicle Energy & Emissions Modeling**: NOx prediction, energy consumption analysis
+- **Fleet Analytics & Optimization**: TCO analysis, fleet electrification strategies
+- **Data Engineering & MLOps**: Production-grade data/ML systems
+- **Energy Systems**: Renewable energy, battery optimization, smart charging
 
-### Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/panne027/panne027.github.io.git
-   cd panne027.github.io
-   ```
+### Notable Projects
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+- **T3CO Tool**: Lead developer of open-source Total Cost of Ownership engine for commercial EV/ICE fleets
+- **T3CO-Go**: Interactive web dashboard for scenario analysis and TCO visualization
+- **DriveCAT+**: Enhanced data collection and processing pipeline for commercial vehicle operational data
+- **Physics-aware AI**: Novel machine learning approaches for vehicle emissions prediction
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+## Technology Stack
 
-4. Open [http://localhost:5173](http://localhost:5173) in your browser.
+- **Frontend**: React.js, Vite, Tailwind CSS
+- **Backend**: Python, FastAPI, PostgreSQL
+- **ML/AI**: PyTorch, scikit-learn, TensorFlow
+- **Deployment**: GitHub Pages, AWS, Docker
+- **Tools**: Git, GitHub Actions, PyPI
 
-## 🚀 Deployment
+## Quick Start
 
-This site is automatically deployed to GitHub Pages using GitHub Actions. The deployment process:
+```bash
+# Clone the repository
+git clone https://github.com/panne027/panne027.github.io.git
+cd panne027.github.io
 
-1. **Automatic Deployment**: Every push to the `main` branch triggers a build and deployment
-2. **Manual Deployment**: You can also deploy manually using:
-   ```bash
-   npm run deploy
-   ```
+# Install dependencies
+npm install
 
-### GitHub Pages Setup
+# Start development server
+npm run dev
 
-1. Go to your repository settings on GitHub
-2. Navigate to "Pages" in the sidebar
-3. Under "Source", select "GitHub Actions"
-4. The site will be available at `https://panne027.github.io`
+# Build for production
+npm run build
 
-## 📁 Project Structure
-
-```
-├── src/
-│   ├── App.jsx          # Main React component
-│   ├── main.jsx         # React entry point
-│   └── index.css        # Global styles with Tailwind
-├── .github/workflows/   # GitHub Actions for deployment
-├── index.html           # HTML template
-├── package.json         # Dependencies and scripts
-├── vite.config.js       # Vite configuration
-├── tailwind.config.js   # Tailwind CSS configuration
-└── postcss.config.js    # PostCSS configuration
+# Deploy to GitHub Pages
+npm run deploy
 ```
 
-## 🛠️ Built With
+## SEO Features
 
-- **React** - Frontend framework
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Utility-first CSS framework
-- **Lucide React** - Icon library
-- **GitHub Pages** - Hosting platform
-- **GitHub Actions** - CI/CD pipeline
+This portfolio website is optimized for search engines with the following features:
 
-## 📝 License
+- **Comprehensive Meta Tags**: Open Graph, Twitter Cards, and structured data
+- **Semantic HTML**: Proper heading hierarchy and semantic elements
+- **Sitemap**: XML sitemap for search engine crawling
+- **Robots.txt**: Search engine crawling guidelines
+- **Structured Data**: JSON-LD schema markup for rich snippets
+- **Performance**: Optimized loading and responsive design
 
-This project is open source and available under the [LICENSE.txt](LICENSE.txt) file.
+## Contact Information
+
+- **Email**: <harishpanselvam@gmail.com>
+- **LinkedIn**: [Harish Panneer Selvam](https://www.linkedin.com/in/harish-panneerselvam/)
+- **GitHub**: [panne027](https://github.com/panne027)
+- **ORCID**: [0000-0002-9452-8185](https://orcid.org/0000-0002-9452-8185)
+- **ResearchGate**: [Harish Panneer Selvam](https://www.researchgate.net/profile/Harish-Panneer-Selvam)
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+*Built with React, Tailwind CSS, and deployed on GitHub Pages*

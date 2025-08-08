@@ -179,7 +179,7 @@ function HomeSection() {
     useEffect(() => setYear(new Date().getFullYear()), []);
 
     return (
-        <section id="home" className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
+        <main id="home" className="min-h-screen bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
             {/* HERO */}
             <header className="max-w-7xl mx-auto px-6 py-16">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -228,13 +228,13 @@ function HomeSection() {
                         </div>
                     </div>
 
-                    <div className="relative">
+                    <aside className="relative">
                         <div className="aspect-square lg:aspect-[4/5] rounded-3xl bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border border-neutral-700/50 p-8 backdrop-blur-sm overflow-hidden">
                             {/* Photo */}
                             <div className="absolute inset-0 rounded-3xl overflow-hidden">
                                 <img
                                     src="/thumbnails/PXL_20240730_175801701.PORTRAIT~2.jpg"
-                                    alt="Harish Panneer Selvam"
+                                    alt="Harish Panneer Selvam - Physics-Guided ML Engineer and Researcher at NREL"
                                     className="w-full h-full object-cover"
                                 />
                                 {/* Gradient overlay for the bottom half of the photo */}
@@ -265,7 +265,7 @@ function HomeSection() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </aside>
                 </div>
             </header>
 
@@ -294,7 +294,7 @@ function HomeSection() {
                     ))}
                 </div>
             </section>
-        </section>
+        </main>
     );
 }
 
@@ -307,8 +307,6 @@ function PublicationsSection() {
         { id: 'all', label: 'All Publications', count: publications.length + pressCoverage.length },
         { id: 'patents', label: 'Patents', count: publicationCategories.patents.length },
         { id: 'papers', label: 'Papers', count: publicationCategories.papers.length },
-        // { id: 'conferences', label: 'Conference Papers', count: publicationCategories.conferences.length },
-        // { id: 'preprints', label: 'Preprints', count: publicationCategories.preprints.length },
         { id: 'thesis', label: 'Thesis', count: publicationCategories.thesis.length },
         { id: 'press', label: 'Press Coverage', count: publicationCategories.press.length }
     ];
@@ -347,8 +345,8 @@ function PublicationsSection() {
                 </div>
 
                 {/* Filters */}
-                <div className="mb-8 space-y-4">
-                    <div className="flex flex-wrap gap-2">
+                <div className="mb-8 space-y-4 flex flex-col items-center">
+                    <div className="flex flex-wrap justify-center gap-2">
                         {categories.map(cat => (
                             <button
                                 key={cat.id}
@@ -363,7 +361,7 @@ function PublicationsSection() {
                         ))}
                     </div>
 
-                    <div className="relative max-w-md mx-auto">
+                    <div className="relative max-w-md w-full">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400" />
                         <input
                             type="text"
@@ -376,7 +374,7 @@ function PublicationsSection() {
                 </div>
 
                 {/* Publications Grid */}
-                <div className="grid gap-6">
+                <div className="grid gap-6 max-w-4xl mx-auto">
                     {filteredPublications.map((pub) => (
                         <PublicationCard key={pub.id} publication={pub} />
                     ))}
@@ -868,6 +866,54 @@ export default function App() {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // SEO: Update meta description and title based on current section
+    useEffect(() => {
+        const updateMetaTags = () => {
+            const sections = ['home', 'publications', 'experience', 'projects', 'contact'];
+            const currentSection = sections.find(section => {
+                const element = document.getElementById(section);
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    return rect.top <= 200 && rect.bottom >= 200;
+                }
+                return false;
+            }) || 'home';
+
+            const metaDescriptions = {
+                home: "Harish Panneer Selvam - Physics-Guided ML Engineer & Researcher at NREL. Specializing in vehicle systems, energy optimization, and fleet analytics.",
+                publications: "Research publications by Harish Panneer Selvam - Physics-aware AI models, vehicle emissions prediction, TCO analysis, and fleet optimization.",
+                experience: "Professional experience of Harish Panneer Selvam - NREL, Exergi Predictive, Ford Motor Company, University of Minnesota, and Raftar Formula Racing.",
+                projects: "Projects by Harish Panneer Selvam - T3CO tool, T3CO-Go dashboard, DriveCAT+, physics-aware AI, and energy prediction systems.",
+                contact: "Contact Harish Panneer Selvam - Physics-guided ML engineer and researcher specializing in vehicle systems and energy optimization."
+            };
+
+            const titles = {
+                home: "Harish Panneer Selvam - Physics-Guided ML Engineer & Researcher | NREL",
+                publications: "Publications - Harish Panneer Selvam | Research & Papers",
+                experience: "Experience - Harish Panneer Selvam | Professional Background",
+                projects: "Projects - Harish Panneer Selvam | T3CO, AI, Energy Systems",
+                contact: "Contact - Harish Panneer Selvam | Get in Touch"
+            };
+
+            // Update meta description
+            const metaDescription = document.querySelector('meta[name="description"]');
+            if (metaDescription) {
+                metaDescription.setAttribute('content', metaDescriptions[currentSection]);
+            }
+
+            // Update title
+            document.title = titles[currentSection];
+        };
+
+        // Update on scroll
+        const handleScrollForSEO = () => {
+            requestAnimationFrame(updateMetaTags);
+        };
+
+        window.addEventListener('scroll', handleScrollForSEO, { passive: true });
+        return () => window.removeEventListener('scroll', handleScrollForSEO);
     }, []);
 
     return (
