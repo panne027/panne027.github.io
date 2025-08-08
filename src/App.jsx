@@ -500,45 +500,72 @@ function ContactPage() {
                     <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
                     <p className="text-neutral-400 max-w-2xl mx-auto">Interested in physics-guided ML, vehicle systems, or energy optimization? Let's connect.</p>
                 </div>
-
+                
                 <div className="grid md:grid-cols-2 gap-8">
                     <div className="space-y-6">
                         <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
                             <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
                             <div className="space-y-4">
-                                <div className="flex items-center gap-3">
+                                <a href="mailto:harish.panneerselvam@nrel.gov" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
                                     <Mail className="w-5 h-5 text-blue-400" />
                                     <div>
                                         <p className="font-medium">Email</p>
                                         <p className="text-sm text-neutral-400">harish.panneerselvam@nrel.gov</p>
                                     </div>
-                                </div>
-                                <div className="flex items-center gap-3">
+                                </a>
+                                <a href="https://github.com/panne027" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
                                     <Github className="w-5 h-5 text-purple-400" />
                                     <div>
                                         <p className="font-medium">GitHub</p>
                                         <p className="text-sm text-neutral-400">github.com/panne027</p>
                                     </div>
-                                </div>
-                                <div className="flex items-center gap-3">
+                                </a>
+                                <a href="https://linkedin.com/in/harish-panneer-selvam" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
                                     <Linkedin className="w-5 h-5 text-blue-500" />
                                     <div>
                                         <p className="font-medium">LinkedIn</p>
                                         <p className="text-sm text-neutral-400">linkedin.com/in/harish-panneer-selvam</p>
                                     </div>
-                                </div>
-                                <div className="flex items-center gap-3">
+                                </a>
+                                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
                                     <FileText className="w-5 h-5 text-green-400" />
                                     <div>
                                         <p className="font-medium">Resume</p>
                                         <p className="text-sm text-neutral-400">Download PDF</p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
-
+                    
                     <div className="space-y-6">
+                        <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
+                            <h3 className="text-xl font-semibold mb-4">Academic Profiles</h3>
+                            <div className="space-y-4">
+                                <a href="https://orcid.org/0000-0002-9452-8185" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
+                                    <Users className="w-5 h-5 text-orange-400" />
+                                    <div>
+                                        <p className="font-medium">ORCID</p>
+                                        <p className="text-sm text-neutral-400">0000-0002-9452-8185</p>
+                                    </div>
+                                </a>
+                                <a href="https://scholar.google.com/citations?user=YOUR_GOOGLE_SCHOLAR_ID" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
+                                    <BookOpen className="w-5 h-5 text-blue-600" />
+                                    <div>
+                                        <p className="font-medium">Google Scholar</p>
+                                        <p className="text-sm text-neutral-400">View Profile</p>
+                                    </div>
+                                </a>
+                                <a href="https://www.researchgate.net/profile/Harish-Panneer-Selvam" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
+                                    <Globe className="w-5 h-5 text-green-500" />
+                                    <div>
+                                        <p className="font-medium">ResearchGate</p>
+                                        <p className="text-sm text-neutral-400">View Profile</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        
                         <div className="p-6 rounded-2xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 backdrop-blur-sm">
                             <h3 className="text-xl font-semibold mb-4">Areas of Collaboration</h3>
                             <div className="space-y-3">
