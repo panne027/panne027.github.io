@@ -142,7 +142,7 @@ export const projects = [
             { label: "PyPI Package", href: "https://pypi.org/project/t3co/", icon: "external" },
             { label: "NREL Feature", href: "https://www.nrel.gov/news/detail/program/2024/nrels-commercial-electric-vehicle-cost-of-ownership-tool-is-best-in-class-and-free", icon: "newspaper" },
         ],
-        tags: ["Python", "Optimization", "Fleet Analytics", "Open Source"],
+        tags: ["Python", "Optimization", "Fleet Analytics", "Open Source", "NREL"],
         highlight: true
     },
     {
@@ -153,7 +153,7 @@ export const projects = [
             { label: "DOI", href: "https://doi.org/10.11578/dc.20250422.3", icon: "external" },
             { label: "OSTI Record", href: "https://www.osti.gov/biblio/code-154613", icon: "external" },
         ],
-        tags: ["FastAPI", "Plotly", "Dashboards", "Packaging"],
+        tags: ["FastAPI", "Plotly", "Dashboards", "Packaging", "NREL"],
         highlight: true
     },
     {
@@ -164,7 +164,40 @@ export const projects = [
             { label: "PyPI Package", href: "#", icon: "external" },
             { label: "Documentation", href: "#", icon: "external" },
         ],
-        tags: ["Data Engineering", "Python", "Vehicle Data", "ETL"],
+        tags: ["Data Engineering", "Python", "Vehicle Data", "ETL", "NREL"],
+        highlight: false
+    },
+    {
+        title: "FleetREDI Pipeline Modernization",
+        role: "Lead data engineer",
+        blurb: "Modernizing FleetREDI pipelines and dashboards with AI for enhancing FleetDNA, the largest public commercial vehicle dataset. Implementing automated data processing workflows and ML-driven analytics.",
+        links: [
+            { label: "FleetDNA", href: "https://www.nrel.gov/transportation/fleettest-fleet-dna.html", icon: "external" },
+            { label: "Documentation", href: "#", icon: "external" },
+        ],
+        tags: ["Data Engineering", "Machine Learning", "Fleet Analytics", "AI", "NREL"],
+        highlight: true
+    },
+    {
+        title: "Commercial Vehicle Energy Analysis",
+        role: "Research engineer",
+        blurb: "Engineered novel algorithms for operational and energy analyses to drive fleet decarbonization and scheduling improvements. Developed physics-based models for energy prediction across diverse vehicle types.",
+        links: [
+            { label: "Research Paper", href: "#", icon: "external" },
+            { label: "Technical Report", href: "#", icon: "external" },
+        ],
+        tags: ["Energy Analysis", "Physics Modeling", "Fleet Optimization", "Decarbonization", "NREL"],
+        highlight: false
+    },
+    {
+        title: "DOE Project Support Tools",
+        role: "Data science lead",
+        blurb: "Led development of data-logging workflows and analysis tools supporting 30+ DOE and industry projects. Created standardized data processing pipelines and visualization dashboards.",
+        links: [
+            { label: "Project Portfolio", href: "#", icon: "external" },
+            { label: "Tools Repository", href: "#", icon: "external" },
+        ],
+        tags: ["Data Science", "DOE Projects", "Workflow Automation", "Visualization", "NREL"],
         highlight: false
     },
     {

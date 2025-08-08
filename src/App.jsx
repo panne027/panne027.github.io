@@ -592,6 +592,38 @@ function ExperienceSection() {
 
 // Projects Section Component
 function ProjectsSection() {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedTags, setSelectedTags] = useState([]);
+
+    // Get all unique tags from projects
+    const allTags = [...new Set(projects.flatMap(project => project.tags))].sort();
+
+    // Filter projects based on search term and selected tags
+    const filteredProjects = projects.filter(project => {
+        const matchesSearch = searchTerm === '' ||
+            project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            project.blurb.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            project.role.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesTags = selectedTags.length === 0 ||
+            selectedTags.some(tag => project.tags.includes(tag));
+
+        return matchesSearch && matchesTags;
+    });
+
+    const toggleTag = (tag) => {
+        setSelectedTags(prev =>
+            prev.includes(tag)
+                ? prev.filter(t => t !== tag)
+                : [...prev, tag]
+        );
+    };
+
+    const clearFilters = () => {
+        setSearchTerm('');
+        setSelectedTags([]);
+    };
+
     return (
         <section id="projects" className="py-16 bg-gradient-to-br from-neutral-950 via-neutral-900 to-neutral-950 text-neutral-100">
             <div className="max-w-7xl mx-auto px-6">
@@ -600,8 +632,60 @@ function ProjectsSection() {
                     <p className="text-neutral-400 max-w-2xl mx-auto">Selected work combining physics, ML, and software engineering</p>
                 </div>
 
+                {/* Search and Filter Controls */}
+                <div className="mb-8 space-y-6">
+                    {/* Search Box */}
+                    <div className="max-w-md mx-auto">
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400" />
+                            <input
+                                type="text"
+                                placeholder="Search projects..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full pl-10 pr-4 py-3 bg-neutral-900/50 border border-neutral-700/50 rounded-xl text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-300"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Tag Filters */}
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-lg font-semibold">Filter by Tags</h3>
+                            {(searchTerm || selectedTags.length > 0) && (
+                                <button
+                                    onClick={clearFilters}
+                                    className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                                >
+                                    Clear all filters
+                                </button>
+                            )}
+                        </div>
+                        <div className="flex flex-wrap gap-2 justify-center">
+                            {allTags.map((tag) => (
+                                <button
+                                    key={tag}
+                                    onClick={() => toggleTag(tag)}
+                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedTags.includes(tag)
+                                        ? 'bg-blue-600/20 border border-blue-500/50 text-blue-300'
+                                        : 'bg-neutral-800/50 border border-neutral-700/50 text-neutral-300 hover:bg-neutral-700/50 hover:border-neutral-600/50'
+                                        }`}
+                                >
+                                    {tag}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Results Count */}
+                    <div className="text-center text-neutral-400">
+                        Showing {filteredProjects.length} of {projects.length} projects
+                    </div>
+                </div>
+
+                {/* Projects Grid */}
                 <div className="grid lg:grid-cols-2 gap-8">
-                    {projects.map((p) => (
+                    {filteredProjects.map((p) => (
                         <article key={p.title} className={`p-6 rounded-2xl border backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] ${p.highlight
                             ? 'bg-gradient-to-br from-neutral-900/80 to-neutral-800/80 border-blue-500/30 shadow-lg shadow-blue-500/10'
                             : 'bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border-neutral-700/50'
@@ -634,6 +718,23 @@ function ProjectsSection() {
                         </article>
                     ))}
                 </div>
+
+                {/* No Results Message */}
+                {filteredProjects.length === 0 && (
+                    <div className="text-center py-12">
+                        <div className="text-neutral-400 mb-4">
+                            <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                            <p className="text-lg">No projects found matching your criteria</p>
+                            <p className="text-sm">Try adjusting your search terms or filters</p>
+                        </div>
+                        <button
+                            onClick={clearFilters}
+                            className="px-6 py-2 bg-blue-600/20 border border-blue-500/50 text-blue-300 rounded-lg hover:bg-blue-600/30 transition-colors"
+                        >
+                            Clear all filters
+                        </button>
+                    </div>
+                )}
             </div>
         </section>
     );
@@ -675,7 +776,7 @@ function ContactSection() {
                                         <p className="text-sm text-neutral-400">https://www.linkedin.com/in/harish-panneerselvam/</p>
                                     </div>
                                 </a>
-                                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
+                                <a href="public/Harish_Panneer_Selvam__Resume_2025.pdf" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:bg-neutral-800/50 p-2 rounded-lg transition-colors">
                                     <FileText className="w-5 h-5 text-green-400" />
                                     <div>
                                         <p className="font-medium">Resume</p>
