@@ -100,7 +100,9 @@ function FloatingNavigation() {
 
             window.scrollTo({
                 top: offsetPosition,
-                behavior: 'smooth'
+                behavior: 'smooth',
+                // Faster scroll for high refresh rate displays
+                duration: 300
             });
         }
     };
@@ -158,7 +160,12 @@ function ScrollToTop() {
     }, []);
 
     const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+            // Faster scroll for high refresh rate displays
+            duration: 300
+        });
     };
 
     if (!isVisible) return null;
@@ -195,35 +202,36 @@ function HomeSection() {
                             </h1>
 
                             <p className="text-xl text-neutral-300 leading-relaxed max-w-2xl">
-                                I'm a mechanical engineering generalist who codes: I ship production‑grade data/ML systems and build decision tools that combine first‑principles physics with modern AI.
+                                I'm a full‑stack generalist who ships production systems across modeling, data pipelines, backend, edge, and UI—grounded in first‑principles physics.
                             </p>
                         </div>
 
                         <div className="flex flex-wrap gap-4">
-                            <button onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg">
+                            <button onClick={() => document.getElementById('projects').scrollIntoView({ behavior: 'smooth', duration: 300 })} className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg">
                                 Explore My Work <ArrowRight className="w-4 h-4" />
                             </button>
-                            <button onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })} className="inline-flex items-center gap-2 border border-neutral-700 px-6 py-3 rounded-xl hover:bg-neutral-800 transition-colors">
+                            <button onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth', duration: 300 })} className="inline-flex items-center gap-2 border border-neutral-700 px-6 py-3 rounded-xl hover:bg-neutral-800 transition-colors">
                                 Get in Touch <Mail className="w-4 h-4" />
                             </button>
                         </div>
 
+                        {/* Stats Strip */}
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-8">
                             <div className="p-4 rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 flex items-center gap-3">
                                 <Cpu className="w-5 h-5 text-blue-400" />
-                                <span className="text-sm font-medium">Physics‑ML</span>
+                                <span className="text-sm font-medium">30+ NREL projects</span>
                             </div>
                             <div className="p-4 rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 flex items-center gap-3">
                                 <Car className="w-5 h-5 text-purple-400" />
-                                <span className="text-sm font-medium">Mobility/EV</span>
+                                <span className="text-sm font-medium">5 Exergi programs</span>
                             </div>
                             <div className="p-4 rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 flex items-center gap-3">
                                 <Battery className="w-5 h-5 text-green-400" />
-                                <span className="text-sm font-medium">Energy/TCO</span>
+                                <span className="text-sm font-medium">10+ academic/OSS</span>
                             </div>
                             <div className="p-4 rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-800/50 border border-neutral-700/50 flex items-center gap-3">
                                 <BrainCircuit className="w-5 h-5 text-pink-400" />
-                                <span className="text-sm font-medium">Data/Software</span>
+                                <span className="text-sm font-medium">8+ domains shipped</span>
                             </div>
                         </div>
                     </div>
@@ -294,6 +302,8 @@ function HomeSection() {
                     ))}
                 </div>
             </section>
+
+
         </main>
     );
 }
@@ -518,8 +528,15 @@ function ExperienceSection() {
                                             {e.dept && <p className="text-sm text-neutral-400">{e.dept}</p>}
                                             <p className="text-sm text-neutral-400">{e.location}</p>
                                         </div>
-                                        <div className="text-sm text-neutral-400 bg-neutral-800/50 px-3 py-1 rounded-full">
-                                            {e.time}
+                                        <div className="flex flex-col gap-2">
+                                            <div className="text-sm text-neutral-400 bg-neutral-800/50 px-3 py-1 rounded-full">
+                                                {e.time}
+                                            </div>
+                                            {e.scope && (
+                                                <div className="text-xs text-blue-300 bg-blue-600/20 border border-blue-500/30 px-3 py-1 rounded-full">
+                                                    {e.scope}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -646,33 +663,20 @@ function ProjectsSection() {
                         </div>
                     </div>
 
-                    {/* Tag Filters */}
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between">
-                            <h3 className="text-lg font-semibold">Filter by Tags</h3>
-                            {(searchTerm || selectedTags.length > 0) && (
-                                <button
-                                    onClick={clearFilters}
-                                    className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
-                                >
-                                    Clear all filters
-                                </button>
-                            )}
-                        </div>
-                        <div className="flex flex-wrap gap-2 justify-center">
-                            {allTags.map((tag) => (
-                                <button
-                                    key={tag}
-                                    onClick={() => toggleTag(tag)}
-                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedTags.includes(tag)
-                                        ? 'bg-blue-600/20 border border-blue-500/50 text-blue-300'
-                                        : 'bg-neutral-800/50 border border-neutral-700/50 text-neutral-300 hover:bg-neutral-700/50 hover:border-neutral-600/50'
-                                        }`}
-                                >
-                                    {tag}
-                                </button>
-                            ))}
-                        </div>
+                    {/* Project Tag Filters */}
+                    <div className="flex flex-wrap gap-2 justify-center mb-8">
+                        {['Python', 'C++', 'Machine Learning', 'Data Engineering', 'Vehicle Data', 'Fleet Analytics', 'Energy Analysis', 'Physics Modeling', 'Emissions', 'Autonomy', 'Edge Computing', 'CAN/J1939', 'GPS/INS', 'Simulation', 'Optimization', 'Research', 'NREL', 'Exergi', 'UMN', 'Product', 'Tooling', 'UI', 'API Development', 'Packaging', 'Reliability', 'Controls', 'Mapping', 'Localization', 'Synthetic Data', 'Visualization', 'Workflow Automation', 'Explainable AI', 'Hybrid/EV', 'Terrain Analysis', 'Dead-reckoning', 'Tactical Vehicles', 'Drive-cycle', 'NSF', 'SciML', 'Spatial Computing', 'Mechanical Design', 'Team Leadership', 'Racing', 'Engineering', 'Market Analysis', 'Financial Modeling', 'Energy Storage', 'Wastewater Treatment'].map((tag) => (
+                            <button
+                                key={tag}
+                                onClick={() => toggleTag(tag)}
+                                className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 ${selectedTags.includes(tag)
+                                    ? 'bg-blue-600/20 border border-blue-500/50 text-blue-300'
+                                    : 'bg-neutral-800/50 border border-neutral-700/50 text-neutral-300 hover:bg-neutral-700/50 hover:border-neutral-600/50'
+                                    }`}
+                            >
+                                {tag}
+                            </button>
+                        ))}
                     </div>
 
                     {/* Results Count */}
@@ -699,9 +703,9 @@ function ProjectsSection() {
                             <p className="text-sm text-neutral-400 mb-3">{p.role}</p>
                             <p className="text-neutral-300 mb-4 leading-relaxed">{p.blurb}</p>
 
-                            <div className="flex flex-wrap gap-2 mb-4">
+                            <div className="flex flex-wrap gap-1 mb-4">
                                 {p.tags.map((t) => (
-                                    <span key={t} className="text-xs px-3 py-1 rounded-full bg-neutral-800/50 border border-neutral-700/50">{t}</span>
+                                    <span key={t} className="text-xs px-2 py-0.5 rounded-md bg-neutral-800/50 text-neutral-300 border border-neutral-700/50">{t}</span>
                                 ))}
                             </div>
 
@@ -882,18 +886,18 @@ export default function App() {
             }) || 'home';
 
             const metaDescriptions = {
-                home: "Harish Panneer Selvam - Physics-Guided ML Engineer & Researcher at NREL. Specializing in vehicle systems, energy optimization, and fleet analytics.",
+                home: "Harish Panneer Selvam - Generalist Software Engineer specializing in autonomy, vehicle systems, and physics-guided ML. Full-stack experience across 30+ projects at NREL, edge computing at Exergi, and research at UMN.",
                 publications: "Research publications by Harish Panneer Selvam - Physics-aware AI models, vehicle emissions prediction, TCO analysis, and fleet optimization.",
-                experience: "Professional experience of Harish Panneer Selvam - NREL, Exergi Predictive, Ford Motor Company, University of Minnesota, and Raftar Formula Racing.",
-                projects: "Projects by Harish Panneer Selvam - T3CO tool, T3CO-Go dashboard, DriveCAT+, physics-aware AI, and energy prediction systems.",
-                contact: "Contact Harish Panneer Selvam - Physics-guided ML engineer and researcher specializing in vehicle systems and energy optimization."
+                experience: "Professional experience of Harish Panneer Selvam - Generalist software engineer at NREL (30+ projects), Exergi Predictive (autonomy-adjacent), Ford Motor Company, University of Minnesota, and Raftar Formula Racing.",
+                projects: "Projects by Harish Panneer Selvam - Generalist software engineer for autonomy/vehicle systems. T3CO tool, GPS-denied dead-reckoning, physics-aware AI, edge computing, and energy prediction systems.",
+                contact: "Contact Harish Panneer Selvam - Generalist software engineer specializing in autonomy, vehicle systems, and physics-guided ML for mission-critical applications."
             };
 
             const titles = {
-                home: "Harish Panneer Selvam - Physics-Guided ML Engineer & Researcher | NREL",
+                home: "Harish Panneer Selvam - Generalist Software Engineer | Autonomy & Vehicle Systems",
                 publications: "Publications - Harish Panneer Selvam | Research & Papers",
-                experience: "Experience - Harish Panneer Selvam | Professional Background",
-                projects: "Projects - Harish Panneer Selvam | T3CO, AI, Energy Systems",
+                experience: "Experience - Harish Panneer Selvam | Generalist Software Engineer",
+                projects: "Projects - Harish Panneer Selvam | Autonomy, AI, Energy Systems",
                 contact: "Contact - Harish Panneer Selvam | Get in Touch"
             };
 

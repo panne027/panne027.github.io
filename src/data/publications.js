@@ -48,9 +48,9 @@ export const publications = [
         description: "Ensemble learning approach combining physics-based models with machine learning for NOx emissions prediction in diesel engines.",
         thumbnail: "/thumbnails/sae-nox-paper.svg",
         links: [
-            { label: "SAE Digital Library", href: "https://www.sae.org/publications/technical-papers/content/2021-01-0589/", icon: "external" },
-            { label: "DOI", href: "https://doi.org/10.4271/2021-01-0589", icon: "external" },
-            { label: "Google Scholar", href: "https://scholar.google.com/scholar?q=Prediction+of+NOx+Emissions+Compression+Ignition+Engines+Harish+Panneer+Selvam", icon: "external" }
+            { label: "SAE Digital Library", href: "https://www.sae.org/publications/technical-papers/content/2021-24-0082/", icon: "external" },
+            { label: "DOI", href: "https://doi.org/10.4271/2021-24-0082", icon: "external" },
+            { label: "Google Scholar", href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DRfQkcUAAAAJ&citation_for_view=DRfQkcUAAAAJ:Y0pCki6q_DkC", icon: "external" }
         ],
         tags: ["NOx Emissions", "Ensemble Learning", "Diesel Engines", "SAE"],
         highlight: true
@@ -68,11 +68,28 @@ export const publications = [
         links: [
             { label: "arXiv", href: "https://arxiv.org/abs/2105.00375", icon: "external" },
             { label: "PDF", href: "https://arxiv.org/pdf/2105.00375", icon: "pdf" },
-            { label: "Google Scholar", href: "https://scholar.google.com/scholar?q=Vehicle+Emissions+Prediction+Physics-Aware+AI+Models+Harish+Panneer+Selvam", icon: "external" }
+            { label: "Google Scholar", href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DRfQkcUAAAAJ&citation_for_view=DRfQkcUAAAAJ:d1gkVwhDpl0C", icon: "external" }
         ],
         tags: ["Physics-Aware AI", "Vehicle Emissions", "OBD Data", "arXiv"],
         highlight: true
     },
+    {
+        id: "umn-technical-report-physics-ai-2021",
+        type: "papers",
+        title: "Vehicle Emissions Prediction with Physics-Aware AI Models: Technical Report",
+        authors: "Harish Panneer Selvam, et al.",
+        venue: "",
+        year: "2021",
+        thumbnail: "/thumbnails/arxiv-physics-ai-2021.svg",
+        links: [
+            { label: "UMN Conservancy", href: "https://conservancy.umn.edu/items/8f031d4d-59e6-4ef6-a6b3-ecde3eb591fb", icon: "external" },
+            { label: "PDF", href: "https://conservancy.umn.edu/server/api/core/bitstreams/15a28ede-bcd7-48a5-8909-42886ce00934/content", icon: "pdf" },
+            { label: "Google Scholar", href: "https://scholar.google.com/citations?view_op=view_citation&hl=en&user=DRfQkcUAAAAJ&citation_for_view=DRfQkcUAAAAJ:9yKSN-GCB0IC", icon: "external" }
+        ],
+        tags: ["Physics-Aware AI", "Vehicle Emissions", "OBD Data"],
+        highlight: true
+    },
+
     {
         id: "arxiv-physics-ai-2025",
         type: "papers",
@@ -120,6 +137,7 @@ export const publications = [
         thumbnail: "/thumbnails/survey-differential-equations.svg",
         links: [
             { label: "arXiv", href: "https://arxiv.org/abs/2304.13807", icon: "external" },
+            { label: "PDF", href: "https://arxiv.org/pdf/2304.13807", icon: "pdf" },
             { label: "Google Scholar", href: "https://scholar.google.com/scholar?q=A+Survey+Solving+Discovering+Differential+Equations+Deep+Neural+Networks+Harish+Panneer+Selvam", icon: "external" }
         ],
         tags: ["Deep Neural Networks", "Differential Equations", "Survey", "AI"],
@@ -182,8 +200,7 @@ export const pressCoverage = [
         ],
         tags: ["T5E IIT Madras", "Harish Panneer Selvam", "Press Coverage"],
         highlight: false
-    },
-
+    }
 ];
 
 export const researchProjects = [
@@ -214,7 +231,8 @@ export const researchProjects = [
         links: [
             { label: "DOI", href: "https://doi.org/10.11578/dc.20250422.3", icon: "external" },
             { label: "OSTI Record", href: "https://www.osti.gov/biblio/code-154613", icon: "external" },
-            { label: "GitHub", href: "https://github.com/NREL/T3CO-Go", icon: "github" }
+            { label: "GitHub", href: "https://github.com/NREL/T3CO-Go", icon: "github" },
+            { label: "PyPI Package", href: "https://pypi.org/project/t3co-go/", icon: "external" }
         ],
         tags: ["FastAPI", "Plotly", "Dashboards", "Web App"],
         highlight: true
