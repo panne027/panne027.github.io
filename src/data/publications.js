@@ -6,16 +6,31 @@ export const publications = [
         authors: "Harish Panneer Selvam",
         venue: "US Patent Application",
         year: "2025",
-        patentNumber: "18/539,710",
+        patentNumber: "US20250198775A1",
         status: "Pending",
         description: "Novel machine learning approach for predicting energy consumption in complex systems with high accuracy and interpretability.",
         thumbnail: "/thumbnails/patent-energy-prediction.svg",
         links: [
-            { label: "USPTO", href: "https://patents.google.com/patent/US20250123456A1", icon: "patent" },
-            { label: "Google Patents", href: "https://patents.google.com/patent/US20250123456A1", icon: "external" }
+            // { label: "USPTO", href: "https://patents.google.com/patent/US20250198775A1", icon: "patent" },
+            { label: "Google Patents", href: "https://patents.google.com/patent/US20250198775A1", icon: "external" }
         ],
         tags: ["Machine Learning", "Energy Prediction", "Patent", "AI"],
         highlight: true
+    },
+    {
+        id: "patent-synthetic-drive-cycles",
+        type: "patent",
+        title: "Machine learning based generation and use of synthetic drive cycles",
+        authors: "Harish Panneer Selvam",
+        venue: "US Patent Application",
+        year: "2025",
+        patentNumber: "US20250244132A1",
+        status: "Pending",
+        description: "Novel machine learning approach for generating and using synthetic drive cycles for vehicle energy modeling and emissions prediction.",
+        thumbnail: "/thumbnails/patent-synthetic-drive-cycles.svg",
+        links: [
+            { label: "USPTO", href: "https://patents.google.com/patent/US20250244132A1", icon: "patent" },
+        ]
     },
     {
         id: "journal-ev-range-prediction",
